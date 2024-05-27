@@ -1,21 +1,22 @@
-"use client";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import logo from "@/assets/images/logo-white.png";
-import profileDefault from "@/assets/images/profile.png";
-import { FaGoogle } from "react-icons/fa";
+'use client'
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import logo from '@/assets/images/hru-logo_sm.png'
+import profileDefault from '@/assets/images/profile.png'
+import { FaGoogle } from 'react-icons/fa'
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isAdmin, setIsAdmin] = useState(true)
 
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
-    <nav className="bg-blue-700 border-b border-blue-500">
+    <nav className="bg-red-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -23,7 +24,7 @@ const Navbar = () => {
             <button
               type="button"
               id="mobile-dropdown-button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -52,35 +53,42 @@ const Navbar = () => {
             <Link className="flex flex-shrink-0 items-center" href="/">
               <Image className="h-10 w-auto" src={logo} alt="PropertyPulse" />
 
-              <span className="hidden md:block text-white text-2xl font-bold ml-2">
-                PropertyPulse
+              <span className="hidden md:block font-bold">
+                <div className="text-gray-300 text-xs font-medium md:ml-2">
+                  <div className="flex-col">
+                    <div className="flex justify-center">MRGSZ</div>
+                    <div className="flex justify-center">
+                      Játékvezetői Bizottság
+                    </div>
+                  </div>
+                </div>
               </span>
             </Link>
             {/* <!-- Desktop Menu Hidden below md screens --> */}
             <div className="hidden md:ml-6 md:block">
               <div className="flex space-x-2">
                 <Link
-                  href="/"
+                  href="/tablazat"
                   className={`${
-                    pathname === "/" ? "bg-black" : ""
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    pathname === '/tablazat' ? 'bg-red-300' : ''
+                  } hover:bg-red-400 text-white px-3 py-2 rounded-md text-sm font-medium`}
                 >
-                  Home
+                  Táblázat
                 </Link>
                 <Link
-                  href="/properties"
+                  href="/merkozesek"
                   className={`${
-                    pathname === "/properties" ? "bg-black" : ""
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    pathname === '/merkozesek' ? 'bg-red-300' : ''
+                  } hover:bg-red-400 text-white px-3 py-2 rounded-md text-sm font-medium`}
                 >
-                  Properties
+                  Mérkőzések
                 </Link>
                 {isLoggedIn && (
                   <Link
                     href="/properties/add"
                     className={`${
-                      pathname === "/properties/add" ? "bg-black" : ""
-                    } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                      pathname === '/properties/add' ? 'bg-red-300' : ''
+                    } hover:bg-red-400 text-white px-3 py-2 rounded-md text-sm font-medium`}
                   >
                     Add Property
                   </Link>
@@ -162,31 +170,54 @@ const Navbar = () => {
                     aria-labelledby="user-menu-button"
                     tabIndex="-1"
                   >
+                    {isAdmin && (
+                      <Link
+                        href="/admindashboard"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="user-menu-item-0"
+                        onClick={() => {
+                          setIsProfileMenuOpen(false);
+                        }}
+                      >
+                        Admin Dashboard
+                      </Link>
+                    )}
                     <Link
                       href="/profile"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
-                      id="user-menu-item-0"
+                      id="user-menu-item-1"
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                      }}
                     >
-                      Your Profile
+                      Profilom
                     </Link>
                     <Link
-                      href="/properties/saved"
+                      href="/jv-elerhetoseg"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                      }}
                     >
-                      Saved Properties
+                      Elérhetőség megadása
                     </Link>
                     <button
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
-                      id="user-menu-item-2"
+                      id="user-menu-item-3"
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                      }}
                     >
-                      Sign Out
+                      Kijelentkezés
                     </button>
                   </div>
                 )}
@@ -201,18 +232,18 @@ const Navbar = () => {
         <div id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
             <Link
-              href="/"
+              href="/tablazat"
               className={`${
-                pathname === "/" ? "bg-black" : ""
-              } text-white block rounded-md px-3 py-2 text-base font-medium`}
+                pathname === '/tablazat' ? 'bg-red-300' : ''
+              } text-white block rounded-md px-3 py-2 text-sm font-medium`}
             >
-              Home
+              Táblázat
             </Link>
             <Link
-              href="/properties"
+              href="/"
               className={`${
-                pathname === "/properties" ? "bg-black" : ""
-              } text-white block rounded-md px-3 py-2 text-base font-medium`}
+                pathname === '/' ? 'bg-red-300' : ''
+              } text-white block rounded-md px-3 py-2 text-sm font-medium`}
             >
               Properties
             </Link>
@@ -220,8 +251,8 @@ const Navbar = () => {
               <Link
                 href="/properties/add"
                 className={`${
-                  pathname === "/properties/add" ? "bg-black" : ""
-                } text-white block rounded-md px-3 py-2 text-base font-medium`}
+                  pathname === '/properties/add' ? 'bg-red-300' : ''
+                } text-white block rounded-md px-3 py-2 text-sm font-medium`}
               >
                 Add Property
               </Link>
@@ -236,6 +267,6 @@ const Navbar = () => {
         </div>
       )}
     </nav>
-  );
-};
-export default Navbar;
+  )
+}
+export default Navbar
