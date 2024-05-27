@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import logo from '@/assets/images/hru-logo_sm.png'
 import profileDefault from '@/assets/images/profile.png'
-import { FaGoogle } from 'react-icons/fa'
+import { FaGoogle, FaFacebook } from 'react-icons/fa'
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -109,6 +109,17 @@ const Navbar = () => {
             </div>
           )}
 
+          <div>
+            <a
+              className=" flex items-center justify-center"
+              href="https://www.facebook.com/groups/513219272190437"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaFacebook color="white" size={32} />
+              {/* <span className="ml-2">Facebook</span> */}
+            </a>
+          </div>
           {/* <!-- Right Side Menu (Logged In) --> */}
           {isLoggedIn && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
@@ -178,7 +189,7 @@ const Navbar = () => {
                         tabIndex="-1"
                         id="user-menu-item-0"
                         onClick={() => {
-                          setIsProfileMenuOpen(false);
+                          setIsProfileMenuOpen(false)
                         }}
                       >
                         Admin Dashboard
@@ -191,7 +202,7 @@ const Navbar = () => {
                       tabIndex="-1"
                       id="user-menu-item-1"
                       onClick={() => {
-                        setIsProfileMenuOpen(false);
+                        setIsProfileMenuOpen(false)
                       }}
                     >
                       Profilom
@@ -203,7 +214,7 @@ const Navbar = () => {
                       tabIndex="-1"
                       id="user-menu-item-2"
                       onClick={() => {
-                        setIsProfileMenuOpen(false);
+                        setIsProfileMenuOpen(false)
                       }}
                     >
                       Elérhetőség megadása
@@ -214,7 +225,7 @@ const Navbar = () => {
                       tabIndex="-1"
                       id="user-menu-item-3"
                       onClick={() => {
-                        setIsProfileMenuOpen(false);
+                        setIsProfileMenuOpen(false)
                       }}
                     >
                       Kijelentkezés

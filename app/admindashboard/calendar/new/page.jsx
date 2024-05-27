@@ -1,7 +1,7 @@
 import SideMenu from '@/components/Sidemenu'
-import Content from '@/components/Content'
+import CardLayout from '@/components/CardLayout'
 
-const DashBoard = () => {
+const CreateNew = () => {
   return (
     <div className="container m-auto max-w-7xl py-10 bg-blue-50">
       <div className="flex flex-col md:flex-row mt-2 md:mt-5">
@@ -9,10 +9,10 @@ const DashBoard = () => {
           <SideMenu />
         </div>
         <div className="basis-3/4">
-          <Content />
+            <CardLayout>aaúj</CardLayout>
         </div>
       </div>
     </div>
   )
 }
-export default DashBoard
+export default CreateNew
