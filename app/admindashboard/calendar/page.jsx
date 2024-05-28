@@ -1,8 +1,10 @@
-'use client'
+"use client";
 
-import SideMenu from '@/components/Sidemenu'
-import CardLayout from '@/components/CardLayout'
-import Link from 'next/link'
+import Link from "next/link";
+
+import SideMenu from "@/components/Sidemenu";
+import CardLayout from "@/components/CardLayout";
+import PrimaryButton from "@/components/common/PrimaryButton";
 
 const Calendar = () => {
   return (
@@ -13,15 +15,25 @@ const Calendar = () => {
         </div>
         <div className="basis-3/4">
           <CardLayout>
-            <Link href="/admindashboard/calendar/new">+ új létrehozása</Link>
+            <Link href="/admindashboard/calendar/new" className="my-4">
+              <PrimaryButton
+                text={"+ Új létrehozása"}
+                //onClick={handleEditMode}
+              />
+            </Link>
           </CardLayout>
           <CardLayout>
-            <div>Meglévő szerkesztése</div>
+            <Link href="/admindashboard/calendar/edit" className="my-4">
+              <PrimaryButton
+                text={"Szerkesztés"}
+                //onClick={handleEditMode}
+              />
+            </Link>
           </CardLayout>
           <div></div>
         </div>
       </div>
     </div>
-  )
-}
-export default Calendar
+  );
+};
+export default Calendar;

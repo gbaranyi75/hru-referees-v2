@@ -1,9 +1,12 @@
-import React from 'react'
+import DeleteButton from "@/components/common/DeleteButton";
 
 const matchDays = () => {
   return (
-    <div>matchDays</div>
-  )
-}
+    <div>
+      matchDays
+      <DeleteButton text={'Delete'} />
+    </div>
+  );
+};
 
-export default matchDays
+export default matchDays;

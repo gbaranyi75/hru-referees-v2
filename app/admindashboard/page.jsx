@@ -1,5 +1,6 @@
 import SideMenu from '@/components/Sidemenu'
 import Content from '@/components/Content'
+import DeleteButton from '@/components/common/DeleteButton'
 
 const DashBoard = () => {
   return (
@@ -10,6 +11,7 @@ const DashBoard = () => {
         </div>
         <div className="basis-3/4">
           <Content />
+          {/* <DeleteButton /> */}
         </div>
       </div>
     </div>
