@@ -1,46 +1,71 @@
-'use client'
+"use client";
 //import { UserAuth } from 'src/contexts/AuthContext'
-import Link from 'next/link'
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FaTable, FaFootballBall, FaVideo, FaUsers } from "react-icons/fa";
 
 const SideMenu = () => {
   //const { user } = UserAuth()
+  const pathname = usePathname();
 
   return (
-    <div className="mb-1">
-      <div className="w-full mb-1 px-4 md:px-0 md:pr-1 text-center">
-        <Link
-          className="w-full inline-flex justify-center py-3 border border-blue text-white hover:bg-sky-600 bg-sky-700 shadow-sm text-sm font-medium rounded-md"
-          href="/admindashboard/calendar"
-        >
-          Táblázatok
-        </Link>
-      </div>
-      <div className="w-full mb-1 px-4 md:px-0 md:pr-1 text-center">
-        <button
-          className="w-full inline-flex justify-center py-3 border border-transparent text-white hover:bg-sky-600 bg-sky-700 shadow-sm text-sm font-medium rounded-md"
-          //to="/esemenyek"
-        >
-          Események
-        </button>
-      </div>
-      <div className="w-full mb-1 px-4 md:px-0 md:pr-1 text-center">
-        <button
-          className="w-full inline-flex justify-center py-3 border border-transparent text-white hover:bg-sky-600 bg-sky-700 shadow-sm text-sm font-medium rounded-md"
-          //to="/video"
-        >
-          Videók
-        </button>
-      </div>
-      <div className="w-full mb-1 px-4 md:px-0 md:pr-1 text-center">
-        <button
-          className="w-full inline-flex justify-center py-3 border border-transparent text-white hover:bg-sky-600 bg-sky-700 shadow-sm text-sm font-medium rounded-md"
-          //to="/jatekvezetok"
-        >
-          Játékvezetők
-        </button>
-      </div>
+    <div className="mb-1 h-full px-3 overflow-y-auto border-r-2">
+      <ul className="space-y-2 font-medium">
+        <li>
+          <div className="w-full mb-1 px-4 md:px-0 text-center">
+            <Link
+              className={`${
+                pathname === "/dashboard/calendar" ? "bg-gray-300" : ""
+              } w-full items-center inline-flex py-3 text-gray-600 hover:text-gray-700 hover:bg-gray-300 text-sm font-medium rounded-md`}
+              href="/dashboard/calendar"
+            >
+              <FaTable color="gray" size={20} className="mx-3" />
+              <span>Táblázatok</span>
+            </Link>
+          </div>
+        </li>
+        <li>
+          <div className="w-full mb-1 px-4 md:px-0 text-center">
+            <Link
+              className={`${
+                pathname === "/merkozesek" ? "bg-gray-300" : ""
+              } w-full items-center inline-flex py-3 text-gray-600 hover:text-gray-700 hover:bg-gray-300 text-sm font-medium rounded-md`}
+              href="/merkozesek"
+            >
+              <FaFootballBall color="gray" size={20} className="mx-3" />
+              <span>Mérkőzések</span>
+            </Link>
+          </div>
+        </li>
+        <li>
+          <div className="w-full mb-1 px-4 md:px-0 text-center">
+            <Link
+              className={`${
+                pathname === "/" ? "bg-gray-300" : ""
+              } w-full items-center inline-flex py-3 text-gray-600 hover:text-gray-700 hover:bg-gray-300 text-sm font-medium rounded-md`}
+              href="/merkozesek"
+            >
+              <FaUsers color="gray" size={20} className="mx-3" />
+              <span>Játékvezetők</span>
+            </Link>
+          </div>
+        </li>
+        <li>
+          <div className="w-full mb-1 px-4 md:px-0 text-center">
+            <Link
+              className={`${
+                pathname === "/merkozesek" ? "bg-gray-300" : ""
+              } w-full items-center inline-flex py-3 text-gray-600 hover:text-gray-700 hover:bg-gray-300 text-sm font-medium rounded-md`}
+              href="/merkozesek"
+            >
+              <FaVideo color="gray" size={20} className="mx-3" />
+              <span>Videók</span>
+            </Link>
+          </div>
+        </li>
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default SideMenu
+export default SideMenu;

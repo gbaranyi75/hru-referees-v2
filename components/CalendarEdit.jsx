@@ -1,41 +1,33 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
-//import { UserAuth } from "src/contexts/AuthContext";
-//import { CalendarCollection } from "src/contexts/CalendarContext";
+import { useRouter } from "next/navigation";
 import CalendarItem from "./CalendarItem";
-import Spinner from "./Spinner";
+import CardLayout from "@/components/CardLayout";
+import Spinner from "@/components/common/Spinner";
+import OutlinedButton from "@/components/common/Outlinedbutton";
 
-const calendars = [{name: 'januar', days: ['06/21', '06/22']}, {name: 'febr', days: ['06/21', '06/22']},]
-
-const CalendarEdit = ({ isAdmin }) => {
+const CalendarEdit = ({ calendars }) => {
   //const { user, userData } = UserAuth();
-  /* const { getCalendars, addUserSelections, getCalendar, removeCalendar } =
-    CalendarCollection(); */
-  //const [calendars, setCalendars] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [reload, setReload] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
-  const fetchCalendarData = async () => {
-    setLoading(true);
-    //const response = await getCalendars();
-    //setCalendars(response);
+  const exitEditMode = () => {
+    router.push("/dashboard/calendar");
   };
 
   const toggleOpen = (id) => () =>
     setIsOpen((isOpen) => (isOpen === id ? null : id));
 
   useEffect(() => {
-    fetchCalendarData();
     setLoading(false);
-  }, [reload]);
+  }, [calendars]);
 
   return (
     <div className="mb-5">
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
+      {loading && <Spinner loading={loading} />}
+      {!loading && (
+        <CardLayout>
           {calendars.map((data, index) => (
             <CalendarItem
               key={index}
@@ -43,16 +35,18 @@ const CalendarEdit = ({ isAdmin }) => {
               //userData={userData}
               calendar={data}
               //isAdmin={isAdmin}
-              //addUserSelections={addUserSelections}
-              //getCalendar={getCalendar}
-              //removeCalendar={removeCalendar}
-              //setReload={setReload}
-              //setLoading={setLoading}
               isOpen={isOpen === index}
               toggle={toggleOpen(index)}
             />
           ))}
-        </>
+          <div className="px-4 py-3 my-8 text-center sm:px-6">
+            <OutlinedButton
+              text={"Vissza"}
+              type={"button"}
+              onClick={exitEditMode}
+            />
+          </div>
+        </CardLayout>
       )}
     </div>
   );

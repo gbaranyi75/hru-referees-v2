@@ -8,14 +8,14 @@ import PrimaryButton from "@/components/common/PrimaryButton";
 
 const Calendar = () => {
   return (
-    <div className="container m-auto max-w-7xl py-10 bg-blue-50">
+    <div className="container m-auto max-w-7xl py-5 bg-blue-50">
       <div className="flex flex-col md:flex-row mt-2 md:mt-5">
         <div className="basis-1/4">
           <SideMenu />
         </div>
         <div className="basis-3/4">
           <CardLayout>
-            <Link href="/admindashboard/calendar/new" className="my-4">
+            <Link href="/dashboard/calendar/new" className="my-6">
               <PrimaryButton
                 text={"+ Új létrehozása"}
                 //onClick={handleEditMode}
@@ -23,7 +23,7 @@ const Calendar = () => {
             </Link>
           </CardLayout>
           <CardLayout>
-            <Link href="/admindashboard/calendar/edit" className="my-4">
+            <Link href="/dashboard/calendar/edit" className="my-6">
               <PrimaryButton
                 text={"Szerkesztés"}
                 //onClick={handleEditMode}
@@ -36,4 +36,5 @@ const Calendar = () => {
     </div>
   );
 };
+
 export default Calendar;

@@ -1,99 +1,76 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react'
-import DatePicker from 'react-multi-date-picker'
-import weekends from 'react-multi-date-picker/plugins/highlight_weekends'
-import DisabledButton from '@/components/common/DisabledButton'
-import PrimaryButton from '@/components/common/PrimaryButton'
-import OutlinedButton from '@/components/common/Outlinedbutton'
-//import { CalendarCollection } from 'src/contexts/CalendarContext'
-import { useRouter } from 'next/navigation'
+"use client";
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import DisabledButton from "@/components/common/DisabledButton";
+import PrimaryButton from "@/components/common/PrimaryButton";
+import OutlinedButton from "@/components/common/Outlinedbutton";
+import { useRouter } from "next/navigation";
+import { createNewCalendar } from "@/utils/requests";
 
-const format = 'MM/DD'
-const mainPosition = 'bottom'
-const relativePosition = 'center'
-const weekDays = ['Va', 'Hé', 'Ke', 'Sze', 'Csü', 'Pé', 'Szo']
-const months = [
-  'Jan',
-  'Feb',
-  'Már',
-  'Ápr',
-  'Máj',
-  'Jún',
-  'Júl',
-  'Aug',
-  'Szep',
-  'Okt',
-  'Nov',
-  'Dec',
-]
-
-const CalendarNew = ({ resetEditMode }) => {
-  //const { createNewRefAvailabilityCalendar } = CalendarCollection()
-  const [dates, setDates] = useState([])
-  const [eventName, setEventName] = useState('')
-  const [edited, setEdited] = useState(false)
-  const [showError, setShowError] = useState(false)
-  const matchDays = []
-  const datePickerRef = useRef()
-  const router = useRouter()
-
-  const CustomDaysInput = ({ openCalendar, value }) => {
-    return (
-      <input
-        type="text"
-        value={value}
-        readOnly
-        placeholder="Klikk ide a megnyitáshoz..."
-        className="mt-1 px-4 py-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-solid border border-indigo-50 rounded-md"
-        onFocus={openCalendar}
-      />
-    )
-  }
+const CalendarNew = () => {
+  const [dates, setDates] = useState([]);
+  const [eventName, setEventName] = useState("");
+  const [edited, setEdited] = useState(false);
+  const [showErrorName, setShowErrorName] = useState(false);
+  const [showErrorDate, setShowErrorDate] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [newCalendar, setNewCalendar] = useState({
+    name: "",
+    days: [],
+  });
+  const router = useRouter();
+  const days = dates;
+  const dateFormatOptions = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  };
 
   const exitEditMode = () => {
-    router.push('/admindashboard/calendar')
-  }
-
-  const mapDaysArray = () => {
-    dates.map((date, index) => {
-      matchDays.push(date.format())
-      return matchDays
-    })
-  }
+    router.push("/dashboard/calendar");
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (dates.length !== 0 && eventName !== '') {
+    e.preventDefault();
+    if (dates.length !== 0 && eventName !== "") {
       try {
-        mapDaysArray()
-        console.log(eventName)
-        console.log(matchDays)
-        await createNewRefAvailabilityCalendar(eventName, matchDays)
-        setDates([])
-        setEventName('')
-        exitEditMode()
+        await createNewCalendar(newCalendar);
+        setDates([]);
+        setEventName("");
+        exitEditMode();
       } catch (error) {
-        console.error(error.message)
+        console.error(error.message);
       }
-    } else {
-      setShowError(true)
+    } else if (eventName === "") {
+      setShowErrorName(true);
+    } else if (dates.length === 0) {
+      setShowErrorDate(true);
     }
-  }
+  };
 
   const handleChange = (e) => {
-    setEventName(e.target.value)
-    if (e.target.value !== '') {
-      setEdited(true)
+    setEventName(e.target.value);
+    setNewCalendar((prevState) => ({ ...prevState, name: e.target.value }));
+    if (e.target.value !== "") {
+      setEdited(true);
     }
-  }
+  };
+
+  const transformDateFormat = (date) => {
+    return date.toLocaleDateString("hu-HU", dateFormatOptions);
+  };
 
   useEffect(() => {
-    setShowError(false)
-  }, [dates])
+    setShowErrorDate(false);
+  }, [dates]);
+
+  useEffect(() => {
+    setShowErrorName(false);
+  }, [eventName]);
 
   return (
     <div className="mt-5 md:mx-32 md:mt-0 bg-white md:text-left">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} action="POST">
         <div className="overflow-hidden sm:rounded-md">
           <div className="px-4 py-5 bg-white sm:p-6">
             <div className="grid grid-cols-6 gap-6">
@@ -115,36 +92,90 @@ const CalendarNew = ({ resetEditMode }) => {
                 />
               </div>
             </div>
+            {showErrorName && (
+              <div className="flex flex-col md:justify-center">
+                <p className="mt-2 text-sm text-center text-red-600">
+                  Kérlek, add meg a nevet
+                </p>
+              </div>
+            )}
             <div className="flex flex-col md:justify-center">
-              <label className="mt-6 text-sm font-medium text-gray-700">
+              <label className="mb-2 mt-6 text-sm font-medium text-gray-700">
                 Időpontok kiválasztása:
               </label>
 
-              <DatePicker
-                multiple
-                format={format}
-                weekStartDayIndex={1}
-                minDate={new Date()}
-                value={dates}
-                onChange={setDates}
-                weekDays={weekDays}
-                months={months}
-                calendarPosition={`${mainPosition}-${relativePosition}`}
-                sort
-                showOtherDays
-                placeholder="Klikk ide a megnyitáshoz..."
-                render={<CustomDaysInput />}
-                ref={datePickerRef}
-                plugins={[weekends()]}
-              >
-                <button
-                  className="inline-flex justify-center mb-5 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500"
-                  onClick={() => datePickerRef.current.closeCalendar()}
-                >
-                  Bezárás
-                </button>
-              </DatePicker>
-              {showError && (
+              <div className="mx-auto mb-6 text-sm font-medium text-gray-700">
+                <Calendar
+                  onChange={(date) => {
+                    setDate(date);
+                    setEdited(true);
+                  }}
+                  value={date}
+                  formatDate={(date) => {
+                    transformDateFormat(date);
+                  }}
+                  onClickDay={(date) => {
+                    if (dates.includes(transformDateFormat(date).toString())) {
+                      setDates(dates);
+                    } else {
+                      days.push(transformDateFormat(date).toString());
+                      days.sort();
+                      setDates(days, ...dates);
+                      setNewCalendar((prevState) => ({
+                        ...prevState,
+                        days: days,
+                      }));
+                    }
+                  }}
+                />
+              </div>
+              {dates.map((day, idx) => {
+                return (
+                  <div className="flex my-1" key={idx}>
+                    <span
+                      id="badge-dismiss-dark"
+                      className="inline-flex items-center px-2 py-1 me-2 text-sm text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
+                    >
+                      {day}
+                      <button
+                        type="button"
+                        className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+                        data-dismiss-target="#badge-dismiss-dark"
+                        aria-label="Remove"
+                        onClick={() => {
+                          const modifiedArray = dates.filter(
+                            (day) => dates.indexOf(day) !== idx
+                          );
+                          setDates(modifiedArray);
+                          setNewCalendar((prevState) => ({
+                            ...prevState,
+                            days: modifiedArray,
+                          }));
+                          setEdited(true);
+                        }}
+                      >
+                        <svg
+                          className="w-2 h-2"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Remove date</span>
+                      </button>
+                    </span>
+                  </div>
+                );
+              })}
+              {showErrorDate && (
                 <p className="mt-2 text-sm text-center text-red-600">
                   Kérlek, add meg a dátumokat!
                 </p>
@@ -152,15 +183,15 @@ const CalendarNew = ({ resetEditMode }) => {
             </div>
             <div className="mt-5 px-4 py-3 text-center sm:px-6">
               {edited ? (
-                <PrimaryButton type={'submit'} text={'Létrehozás'} />
+                <PrimaryButton type={"submit"} text={"Létrehozás"} />
               ) : (
-                <DisabledButton text={'Létrehozás'} />
+                <DisabledButton text={"Létrehozás"} />
               )}
             </div>
             <div className="mb-5 px-4 py-3 text-center sm:px-6">
               <OutlinedButton
-                text={'Vissza'}
-                type={'button'}
+                text={"Vissza"}
+                type={"button"}
                 onClick={exitEditMode}
               />
             </div>
@@ -168,7 +199,7 @@ const CalendarNew = ({ resetEditMode }) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default CalendarNew
+export default CalendarNew;
