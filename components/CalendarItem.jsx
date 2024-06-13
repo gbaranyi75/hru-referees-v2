@@ -4,10 +4,9 @@ import Calendar from "react-calendar";
 import { MdOutlineExpandMore, MdOutlineExpandLess } from "react-icons/md";
 import DisabledButton from "@/components/common/DisabledButton";
 import PrimaryButton from "@/components/common/PrimaryButton";
-import OutlinedButton from "@/components/common/Outlinedbutton";
+import OutlinedButton from "@/components/common/OutlinedButton";
 import DeleteButton from "./common/DeleteButton";
-import { updateCalendarData } from "@/utils/requests";
-//import { CalendarCollection } from 'src/contexts/CalendarContext'
+import { updateCalendarData, deleteCalendar } from "@/utils/requests";
 import { useRouter } from "next/navigation";
 
 const CalendarItem = ({ calendar, isOpen, toggle }) => {
@@ -43,17 +42,26 @@ const CalendarItem = ({ calendar, isOpen, toggle }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (dates.length !== 0 && eventName !== "") {
-      //setUpdateCalendar((prevState) => ({ ...prevState, name: eventName}));
       try {
-        await updateCalendarData(calendarId, updateCalendar);
+        await updateCalendarData(calendarId, updateCalendar).then(
+          exitEditMode()
+        );
         setDates([]);
         setEventName("");
-        exitEditMode();
       } catch (error) {
         console.error(error.message);
       }
     } else {
       setShowError(true);
+    }
+  };
+
+  const handleDeleteCalendar = async (e) => {
+    e.preventDefault();
+    try {
+      await deleteCalendar(calendarId).then(exitEditMode());
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -143,78 +151,82 @@ const CalendarItem = ({ calendar, isOpen, toggle }) => {
                       }}
                     />
                   </div>
-                  {dates.map((day, idx) => {
-                    return (
-                      <div className="flex my-1" key={idx}>
-                        <span
-                          id="badge-dismiss-dark"
-                          className="inline-flex items-center px-2 py-1 me-2 text-sm text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
-                        >
-                          {day}
-                          <button
-                            type="button"
-                            className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
-                            data-dismiss-target="#badge-dismiss-dark"
-                            aria-label="Remove"
-                            onClick={() => {
-                              const modifiedArray = dates.filter(
-                                (day) => dates.indexOf(day) !== idx
-                              );
-                              setDates(modifiedArray);
-                              setUpdateCalendar((prevState) => ({
-                                ...prevState,
-                                days: modifiedArray,
-                              }));
-                              setEdited(true);
-                            }}
+                  <div className="flex md:flex-row flex-col flex-wrap">
+                    {dates.map((day, idx) => {
+                      return (
+                        <div className="flex my-1" key={idx}>
+                          <span
+                            id="badge-dismiss-dark"
+                            className="inline-flex items-center px-2 py-1 me-2 text-sm text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
                           >
-                            <svg
-                              className="w-2 h-2"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 14 14"
+                            {day}
+                            <button
+                              type="button"
+                              className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+                              data-dismiss-target="#badge-dismiss-dark"
+                              aria-label="Remove"
+                              onClick={() => {
+                                const modifiedArray = dates.filter(
+                                  (day) => dates.indexOf(day) !== idx
+                                );
+                                setDates(modifiedArray);
+                                setUpdateCalendar((prevState) => ({
+                                  ...prevState,
+                                  days: modifiedArray,
+                                }));
+                                setEdited(true);
+                              }}
                             >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                              />
-                            </svg>
-                            <span className="sr-only">Remove date</span>
-                          </button>
-                        </span>
-                      </div>
-                    );
-                  })}
+                              <svg
+                                className="w-2 h-2"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                />
+                              </svg>
+                              <span className="sr-only">Remove date</span>
+                            </button>
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                   {showError && (
                     <p className="mt-2 text-sm text-center text-red-600">
                       Kérlek, add meg a dátumokat!
                     </p>
                   )}
                 </div>
-                <div className="mt-5 px-4 py-3 text-center sm:px-6">
-                  {edited ? (
-                    <PrimaryButton type={"submit"} text={"Mentés"} />
-                  ) : (
-                    <DisabledButton text={"Mentés"} />
-                  )}
-                </div>
-                <div className="px-4 py-3 text-center sm:px-6">
-                  <DeleteButton
-                    type={"button"}
-                    //onClick={deleteCalendar}
-                    text={"Esemény törlése"}
-                  />
-                </div>
-                <div className="px-4 py-3 text-center sm:px-6">
-                  <OutlinedButton
-                    text={"Mégsem"}
-                    type={"button"}
-                    onClick={exitEditMode}
-                  />
+                <div className="flex flex-col-reverse md:flex-row justify-between mt-5">
+                  <div className="px-4 py-3 md:pl-0 text-center sm:px-6">
+                    <OutlinedButton
+                      text={"Mégsem"}
+                      type={"button"}
+                      onClick={exitEditMode}
+                    />
+                  </div>
+                  <div className="px-4 py-3 text-center sm:px-6">
+                    <DeleteButton
+                      type={"button"}
+                      onClick={handleDeleteCalendar}
+                      text={"Esemény törlése"}
+                    />
+                  </div>
+                  <div className="px-4 py-3 md:pr-0 text-center sm:px-6">
+                    {edited ? (
+                      <PrimaryButton type={"submit"} text={"Mentés"} />
+                    ) : (
+                      <DisabledButton text={"Mentés"} />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

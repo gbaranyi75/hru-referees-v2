@@ -1,13 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
+import { useSession } from "next-auth/react";
 import DisabledButton from "@/components/common/DisabledButton";
 import PrimaryButton from "@/components/common/PrimaryButton";
-import OutlinedButton from "@/components/common/Outlinedbutton";
+import OutlinedButton from "@/components/common/OutlinedButton";
 import { useRouter } from "next/navigation";
 import { createNewCalendar } from "@/utils/requests";
 
 const CalendarNew = () => {
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
   const [dates, setDates] = useState([]);
   const [eventName, setEventName] = useState("");
   const [edited, setEdited] = useState(false);
@@ -17,6 +21,12 @@ const CalendarNew = () => {
   const [newCalendar, setNewCalendar] = useState({
     name: "",
     days: [],
+    users: [
+      {
+        selectedDays: [],
+        userId: "",
+      },
+    ],
   });
   const router = useRouter();
   const days = dates;
@@ -34,10 +44,9 @@ const CalendarNew = () => {
     e.preventDefault();
     if (dates.length !== 0 && eventName !== "") {
       try {
-        await createNewCalendar(newCalendar);
+        await createNewCalendar(newCalendar).then(exitEditMode());
         setDates([]);
         setEventName("");
-        exitEditMode();
       } catch (error) {
         console.error(error.message);
       }
@@ -129,71 +138,75 @@ const CalendarNew = () => {
                   }}
                 />
               </div>
-              {dates.map((day, idx) => {
-                return (
-                  <div className="flex my-1" key={idx}>
-                    <span
-                      id="badge-dismiss-dark"
-                      className="inline-flex items-center px-2 py-1 me-2 text-sm text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
-                    >
-                      {day}
-                      <button
-                        type="button"
-                        className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
-                        data-dismiss-target="#badge-dismiss-dark"
-                        aria-label="Remove"
-                        onClick={() => {
-                          const modifiedArray = dates.filter(
-                            (day) => dates.indexOf(day) !== idx
-                          );
-                          setDates(modifiedArray);
-                          setNewCalendar((prevState) => ({
-                            ...prevState,
-                            days: modifiedArray,
-                          }));
-                          setEdited(true);
-                        }}
+              <div className="flex md:flex-row flex-col flex-wrap">
+                {dates.map((day, idx) => {
+                  return (
+                    <div className="flex my-1" key={idx}>
+                      <span
+                        id="badge-dismiss-dark"
+                        className="inline-flex items-center px-2 py-1 me-2 text-sm text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
                       >
-                        <svg
-                          className="w-2 h-2"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 14 14"
+                        {day}
+                        <button
+                          type="button"
+                          className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+                          data-dismiss-target="#badge-dismiss-dark"
+                          aria-label="Remove"
+                          onClick={() => {
+                            const modifiedArray = dates.filter(
+                              (day) => dates.indexOf(day) !== idx
+                            );
+                            setDates(modifiedArray);
+                            setNewCalendar((prevState) => ({
+                              ...prevState,
+                              days: modifiedArray,
+                            }));
+                            setEdited(true);
+                          }}
                         >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                          />
-                        </svg>
-                        <span className="sr-only">Remove date</span>
-                      </button>
-                    </span>
-                  </div>
-                );
-              })}
+                          <svg
+                            className="w-2 h-2"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 14 14"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                            />
+                          </svg>
+                          <span className="sr-only">Remove date</span>
+                        </button>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
               {showErrorDate && (
                 <p className="mt-2 text-sm text-center text-red-600">
                   Kérlek, add meg a dátumokat!
                 </p>
               )}
             </div>
-            <div className="mt-5 px-4 py-3 text-center sm:px-6">
-              {edited ? (
-                <PrimaryButton type={"submit"} text={"Létrehozás"} />
-              ) : (
-                <DisabledButton text={"Létrehozás"} />
-              )}
-            </div>
-            <div className="mb-5 px-4 py-3 text-center sm:px-6">
-              <OutlinedButton
-                text={"Vissza"}
-                type={"button"}
-                onClick={exitEditMode}
-              />
+            <div className="flex flex-col md:flex-row-reverse justify-around mt-5">
+              <div className="px-4 py-3 text-center sm:px-6">
+                {edited ? (
+                  <PrimaryButton type={"submit"} text={"Létrehozás"} />
+                ) : (
+                  <DisabledButton text={"Létrehozás"} />
+                )}
+              </div>
+              <div className="px-4 py-3 text-center sm:px-6">
+                <OutlinedButton
+                  text={"Vissza"}
+                  type={"button"}
+                  onClick={exitEditMode}
+                />
+              </div>
             </div>
           </div>
         </div>

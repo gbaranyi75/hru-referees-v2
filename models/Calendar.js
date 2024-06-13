@@ -6,10 +6,22 @@ const CalendarSchema = new Schema(
       type: String,
       required: true,
     },
-    days: [ 
+    days: [
       {
         type: String,
-        required: true
+        required: true,
+      },
+    ],
+    users: [
+      {
+        selectedDays: [
+          {
+            type: String,
+          },
+        ],
+        userId: {
+          type: String,
+        },
       },
     ],
   },

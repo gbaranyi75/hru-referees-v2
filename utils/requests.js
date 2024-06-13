@@ -23,6 +23,7 @@ async function fetchCalendarData() {
   }
 }
 
+// Create new calendar
 async function createNewCalendar(request) {
   try {
     const res = await fetch(`${apiDomain}/dashboard/calendar`, {
@@ -33,6 +34,7 @@ async function createNewCalendar(request) {
       body: JSON.stringify({
         name: request.name,
         days: request.days,
+        users: request.users,
       }),
       cache: "no-store",
     });
@@ -42,9 +44,12 @@ async function createNewCalendar(request) {
     }
 
     return res.json();
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 }
 
+// Update existing calendar
 async function updateCalendarData(id, request) {
   try {
     // Handle the case where the domain is not available yet
@@ -60,6 +65,7 @@ async function updateCalendarData(id, request) {
       body: JSON.stringify({
         name: request.name,
         days: request.days,
+        users: request.users,
       }),
       cache: "no-store",
     });
@@ -74,4 +80,33 @@ async function updateCalendarData(id, request) {
   }
 }
 
-export { fetchCalendarData, createNewCalendar, updateCalendarData };
+// Delete calendar
+async function deleteCalendar(id, request) {
+  console.log(id);
+  try {
+    // Handle the case where the domain is not available yet
+    if (!apiDomain) {
+      return [];
+    }
+
+    const res = await fetch(`${apiDomain}/dashboard/calendar/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed fetch data");
+    }
+
+    return res.json();
+  } catch (error) {}
+}
+
+export {
+  fetchCalendarData,
+  createNewCalendar,
+  updateCalendarData,
+  deleteCalendar,
+};

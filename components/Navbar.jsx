@@ -1,19 +1,32 @@
-'use client'
-import { useState } from 'react'
-import { usePathname } from 'next/navigation'
-import Image from 'next/image'
-import Link from 'next/link'
-import logo from '@/assets/images/hru-logo_sm.png'
-import profileDefault from '@/assets/images/profile.png'
-import { FaGoogle, FaFacebook } from 'react-icons/fa'
+"use client";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import logo from "@/assets/images/hru-logo_sm.png";
+import profileDefault from "@/assets/images/profile.png";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
-  const [isAdmin, setIsAdmin] = useState(true)
+  const { data: session } = useSession();
+  const profileImage = session?.user?.image;
 
-  const pathname = usePathname()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [providers, setProviders] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(true);
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const setAuthProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+
+    setAuthProviders();
+  }, []);
 
   return (
     <nav className="bg-red-500">
@@ -70,7 +83,7 @@ const Navbar = () => {
                 <Link
                   href="/tablazat"
                   className={`${
-                    pathname === '/tablazat' ? 'bg-red-300' : ''
+                    pathname === "/tablazat" ? "bg-red-300" : ""
                   } hover:bg-red-400 text-white px-3 py-2 rounded-md text-sm font-medium`}
                 >
                   Táblázat
@@ -78,16 +91,16 @@ const Navbar = () => {
                 <Link
                   href="/merkozesek"
                   className={`${
-                    pathname === '/merkozesek' ? 'bg-red-300' : ''
+                    pathname === "/merkozesek" ? "bg-red-300" : ""
                   } hover:bg-red-400 text-white px-3 py-2 rounded-md text-sm font-medium`}
                 >
                   Mérkőzések
                 </Link>
-                {isLoggedIn && (
+                {session && (
                   <Link
                     href="/properties/add"
                     className={`${
-                      pathname === '/properties/add' ? 'bg-red-300' : ''
+                      pathname === "/properties/add" ? "bg-red-300" : ""
                     } hover:bg-red-400 text-white px-3 py-2 rounded-md text-sm font-medium`}
                   >
                     Add Property
@@ -96,18 +109,6 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-
-          {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!isLoggedIn && (
-            <div className="hidden md:block md:ml-6">
-              <div className="flex items-center">
-                <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
-                  <FaGoogle className="text-white mr-2" />
-                  <span>Login or Register</span>
-                </button>
-              </div>
-            </div>
-          )}
 
           <div>
             <a
@@ -120,8 +121,28 @@ const Navbar = () => {
               {/* <span className="ml-2">Facebook</span> */}
             </a>
           </div>
+
+          {/* <!-- Right Side Menu (Logged Out) --> */}
+          {!session && (
+            <div className="hidden md:block md:ml-6">
+              <div className="flex items-center">
+                {providers &&
+                  Object.values(providers).map((provider, index) => (
+                    <button
+                      onClick={() => signIn(provider.id)}
+                      key={index}
+                      className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                    >
+                      <FaGoogle className="text-white mr-2" />
+                      <span>Login or Register</span>
+                    </button>
+                  ))}
+              </div>
+            </div>
+          )}
+
           {/* <!-- Right Side Menu (Logged In) --> */}
-          {isLoggedIn && (
+          {session && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="/messages" className="relative group">
                 <button
@@ -165,8 +186,10 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full"
-                      src={profileDefault}
+                      src={profileImage || profileDefault}
                       alt=""
+                      width={40}
+                      height={40}
                     />
                   </button>
                 </div>
@@ -189,20 +212,20 @@ const Navbar = () => {
                         tabIndex="-1"
                         id="user-menu-item-0"
                         onClick={() => {
-                          setIsProfileMenuOpen(false)
+                          setIsProfileMenuOpen(false);
                         }}
                       >
                         Admin Dashboard
                       </Link>
                     )}
                     <Link
-                      href="/profile"
+                      href="/profil"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-1"
                       onClick={() => {
-                        setIsProfileMenuOpen(false)
+                        setIsProfileMenuOpen(false);
                       }}
                     >
                       Profilom
@@ -214,7 +237,7 @@ const Navbar = () => {
                       tabIndex="-1"
                       id="user-menu-item-2"
                       onClick={() => {
-                        setIsProfileMenuOpen(false)
+                        setIsProfileMenuOpen(false);
                       }}
                     >
                       Elérhetőség megadása
@@ -225,7 +248,8 @@ const Navbar = () => {
                       tabIndex="-1"
                       id="user-menu-item-3"
                       onClick={() => {
-                        setIsProfileMenuOpen(false)
+                        setIsProfileMenuOpen(false);
+                        signOut();
                       }}
                     >
                       Kijelentkezés
@@ -245,7 +269,7 @@ const Navbar = () => {
             <Link
               href="/tablazat"
               className={`${
-                pathname === '/tablazat' ? 'bg-red-300' : ''
+                pathname === "/tablazat" ? "bg-red-300" : ""
               } text-white block rounded-md px-3 py-2 text-sm font-medium`}
             >
               Táblázat
@@ -253,31 +277,37 @@ const Navbar = () => {
             <Link
               href="/"
               className={`${
-                pathname === '/' ? 'bg-red-300' : ''
+                pathname === "/" ? "bg-red-300" : ""
               } text-white block rounded-md px-3 py-2 text-sm font-medium`}
             >
               Properties
             </Link>
-            {isLoggedIn && (
+            {session && (
               <Link
                 href="/properties/add"
                 className={`${
-                  pathname === '/properties/add' ? 'bg-red-300' : ''
+                  pathname === "/properties/add" ? "bg-red-300" : ""
                 } text-white block rounded-md px-3 py-2 text-sm font-medium`}
               >
                 Add Property
               </Link>
             )}
 
-            {!isLoggedIn && (
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-                <span>Login or Register</span>
-              </button>
-            )}
+            {!session &&
+              providers &&
+              Object.values(providers).map((provider, index) => (
+                <button
+                  onClick={() => signIn(provider.id)}
+                  key={index}
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                >
+                  <span>Login or Register</span>
+                </button>
+              ))}
           </div>
         </div>
       )}
     </nav>
-  )
-}
-export default Navbar
+  );
+};
+export default Navbar;
