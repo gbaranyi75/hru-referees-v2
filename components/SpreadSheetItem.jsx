@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { MdOutlineExpandMore, MdOutlineExpandLess } from "react-icons/md";
 import checkedImage from "@/assets/images/checked.png";

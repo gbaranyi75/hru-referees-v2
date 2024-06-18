@@ -147,7 +147,7 @@ const Navbar = () => {
                     ))}
                 </div>
               </div>
-              <div className="flex ml-6">
+              {/* <div className="flex ml-6">
                 <a
                   className="flex items-center justify-center"
                   href="https://www.facebook.com/groups/513219272190437"
@@ -156,8 +156,8 @@ const Navbar = () => {
                 >
                   <FaFacebook color="white" size={32} />
                   {/* <span className="ml-2">Facebook</span> */}
-                </a>
-              </div>
+              {/*  </a>
+              </div> */}
             </>
           )}
 
@@ -253,7 +253,7 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-              <div className="flex ml-6">
+              <div className="hidden ml-6 md:inline-block">
                 <a
                   className="flex items-center justify-center"
                   href="https://www.facebook.com/groups/513219272190437"
@@ -275,6 +275,7 @@ const Navbar = () => {
           <div className="space-y-1 px-2 pb-3 pt-2">
             <Link
               href="/tablazat"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               className={`${
                 pathname === "/tablazat" ? "bg-red-300" : ""
               } text-white block rounded-md px-3 py-2 text-sm font-medium`}
@@ -283,15 +284,37 @@ const Navbar = () => {
             </Link>
             <Link
               href="/"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               className={`${
                 pathname === "/" ? "bg-red-300" : ""
               } text-white block rounded-md px-3 py-2 text-sm font-medium`}
             >
-              Properties
+              Mérkőzések
             </Link>
+            <Link
+              href="/"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              className={`${
+                pathname === "/tablazat" ? "bg-red-300" : ""
+              } text-white block rounded-md px-3 py-2 text-sm font-medium`}
+            >
+              Később....
+            </Link>
+            <div className="flex md:hidden text-white rounded-md px-3 py-2 text-sm font-medium">
+                <a
+                  className="flex items-center justify-center"
+                  href="https://www.facebook.com/groups/513219272190437"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaFacebook color="white" size={24} />
+                  <span className="ml-2">Facebook</span>
+                </a>
+              </div>
             {session && (
               <Link
                 href="/properties/add"
+                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
                 className={`${
                   pathname === "/properties/add" ? "bg-red-300" : ""
                 } text-white block rounded-md px-3 py-2 text-sm font-medium`}

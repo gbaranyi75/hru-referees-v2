@@ -1,6 +1,11 @@
-const Matches = () => {
+import Matches from "@/components/Matches";
+import PageLayout from "@/components/PageLayout";
+
+const MatchesPage = () => {
   return (
-    <div>Matches</div>
-  )
-}
-export default Matches
+    <PageLayout>
+      <Matches />
+    </PageLayout>
+  );
+};
+export default MatchesPage;

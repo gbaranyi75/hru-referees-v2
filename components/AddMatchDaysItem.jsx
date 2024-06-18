@@ -105,7 +105,7 @@ const AddMatchDaysItem = ({
   }, [session]);
 
   return (
-    <div className="flex flex-col border-b mx-6 mt-2 bg-white text-gray-600 text-center justify-center z-0">
+    <div className="flex flex-col border-b md:mx-6 mt-2 bg-white text-gray-600 text-center justify-center z-0">
       <div className="flex md:mx-36 py-5 bg-white text-center justify-center">
         <span>
           <h2 className="text-lg mr-1 font-semibold">{eventName}</h2>
