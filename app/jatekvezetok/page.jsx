@@ -1,15 +1,15 @@
-import SpreadSheet from '@/components/SpreadSheet'
+import Referees from "@/components/Referees"
 
-const SpreadSheetPage = () => {
+const RefereesPage = () => {
   return (
     <section className="bg-blue-50">
       <div className="container m-auto max-w-7xl py-5 text-center text-gray-600">
         <h1 className="text-2xl font-bold mb-2 md:mb-10">
-          Elérhető játékvezetők
+          Játékvezetők
         </h1>
-        <SpreadSheet />
+        <Referees />
       </div>
     </section>
   )
 }
-export default SpreadSheetPage
+export default RefereesPage

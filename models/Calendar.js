@@ -12,13 +12,16 @@ const CalendarSchema = new Schema(
         required: true,
       },
     ],
-    users: [
+    userSelections: [
       {
         selectedDays: [
           {
             type: String,
           },
         ],
+        userName: {
+          type: String,
+        },
         userId: {
           type: String,
         },

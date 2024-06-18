@@ -1,13 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import AddMatchDaysItem from "./AddMatchDaysItem";
 import Spinner from "@/components/Spinner";
 
 const AddMatchDays = () => {
+  const { data: session } = useSession();
+  console.log(session);
+  const userId = session?.user?.id;
+
   const [calendars, setCalendars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [displayName, setDisplayName] = useState("");
 
   const toggleOpen = (id) => () =>
     setIsOpen((isOpen) => (isOpen === id ? null : id));
@@ -22,7 +28,9 @@ const AddMatchDays = () => {
 
         const data = await res.json();
         const sortedData = data.sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt);
+          return (
+            new Date(b.days[0]).getMonth() - new Date(a.days[0]).getMonth()
+          );
         });
         setCalendars(sortedData);
       } catch (error) {
@@ -35,6 +43,31 @@ const AddMatchDays = () => {
     fetchMatchDays();
   }, []);
 
+  useEffect(() => {
+    const fetchUserData = async (userId) => {
+      if (!userId) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/users/${userId}`);
+
+        if (res.status === 200) {
+          const data = await res.json();
+          setDisplayName(data.displayName);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        //setLoading(false);
+      }
+    };
+
+    if (session?.user?.id) {
+      fetchUserData(userId);
+    }
+  }, [session]);
+
   return loading ? (
     <Spinner />
   ) : (
@@ -46,10 +79,12 @@ const AddMatchDays = () => {
           <div className="">
             {calendars.map((calendar, index) => (
               <AddMatchDaysItem
+                session={session}
                 key={calendar._id}
                 calendar={calendar}
                 isOpen={isOpen === index}
                 toggle={toggleOpen(index)}
+                displayName={displayName}
               />
             ))}
           </div>

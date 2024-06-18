@@ -1,27 +1,43 @@
 "use client";
 import { useState, useEffect } from "react";
 import { MdOutlineExpandMore, MdOutlineExpandLess } from "react-icons/md";
+import { updateCalendarData } from "@/utils/requests";
 import DisabledButton from "@/components/common/DisabledButton";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import OutlinedButton from "@/components/common/OutlinedButton";
 
-const myDates = ["2024. 09. 22.", "2024. 04. 13."];
-
-const AddMatchDaysItem = ({ calendar, isOpen, toggle }) => {
-  const currentDates = calendar.days;
-  const [dates, setDates] = useState(currentDates);
-  const [eventName, setEventName] = useState(calendar.name);
-  const [selectedDates, setSelectedDates] = useState(myDates, ...dates);
+const AddMatchDaysItem = ({
+  session,
+  calendar,
+  isOpen,
+  toggle,
+  displayName,
+}) => {
+  const userID = session?.user?.id;
+  //const userName = session?.user?.name;
+  const eventName = calendar.name;
+  const daysOptions = calendar.days;
+  const currentUserSelections = calendar.userSelections;
+  const [dates, setDates] = useState(daysOptions);
+  const [myCurrentDates, setMyCurrentDates] = useState([]);
+  const [selectedDates, setSelectedDates] = useState(myCurrentDates, ...dates);
   const [edited, setEdited] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const [date, setDate] = useState(new Date());
   const [updateCalendar, setUpdateCalendar] = useState({
-    name: eventName,
-    days: dates,
+    userSelections: [],
   });
   const days = dates;
   const calendarId = calendar._id;
+
+  const setMyDays = () => {
+    let days = [];
+    currentUserSelections.map((current) => {
+      if (!current.userId || current.userId === userID) {
+        days.push(current.selectedDays);
+        setSelectedDates(current.selectedDays);
+      }
+      setMyCurrentDates(days);
+    });
+  };
 
   const handleOpenCalendar = (e) => {
     e.preventDefault();
@@ -29,18 +45,45 @@ const AddMatchDaysItem = ({ calendar, isOpen, toggle }) => {
   };
 
   const handleDateSelect = (date) => {
+    setEdited(true);
     let selectedDays = [...selectedDates];
 
     if (!selectedDays.includes(date)) {
       selectedDays = [...selectedDates, date];
-      setIsChecked(true);
     } else {
       selectedDays.splice(selectedDates.indexOf(date), 1);
-      setIsChecked(false);
     }
-    selectedDays.length > 0 ? setEdited(true) : setEdited(false);
-    console.log("selected", selectedDays);
     setSelectedDates(selectedDays);
+    const element = currentUserSelections.find((e) => e.userId === userID);
+    if (element) {
+      element.selectedDays = selectedDays;
+      element.userName = displayName;
+    } else {
+      currentUserSelections.push({
+        selectedDays: selectedDays,
+        userName: displayName,
+        userId: userID,
+      });
+    }
+
+    setUpdateCalendar((prevState) => ({
+      ...prevState,
+      userSelections: currentUserSelections,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (dates.length !== 0 && eventName !== "") {
+      try {
+        await updateCalendarData(calendarId, updateCalendar);
+        toggle();
+      } catch (error) {
+        console.error(error.message);
+      }
+    } else {
+      setShowError(true);
+    }
   };
 
   const clearAndCloseCard = () => {
@@ -48,8 +91,21 @@ const AddMatchDaysItem = ({ calendar, isOpen, toggle }) => {
     toggle();
   };
 
+  useEffect(() => {
+    setUpdateCalendar({
+      userSelections: [
+        {
+          selectedDays: [],
+          userName: displayName,
+          userId: userID,
+        },
+      ],
+    });
+    setMyDays();
+  }, [session]);
+
   return (
-    <div className="flex flex-col border-b mx-6 mt-6 bg-white text-gray-600 text-center justify-center z-0">
+    <div className="flex flex-col border-b mx-6 mt-2 bg-white text-gray-600 text-center justify-center z-0">
       <div className="flex md:mx-36 py-5 bg-white text-center justify-center">
         <span>
           <h2 className="text-lg mr-1 font-semibold">{eventName}</h2>
@@ -76,8 +132,8 @@ const AddMatchDaysItem = ({ calendar, isOpen, toggle }) => {
                     }
                     className={
                       !selectedDates.includes(day)
-                        ? "inline-flex items-center px-2 py-1 me-2 text-sm text-gray-500 bg-gray-100 rounded dark:bg-gray-200 dark:text-gray-500"
-                        : "inline-flex items-center px-2 py-1 me-2 text-sm text-green-800 bg-green-100 rounded dark:bg-green-900 dark:text-green-300"
+                        ? "inline-flex items-center px-3 py-1 me-2 text-sm text-gray-600 bg-gray-300 rounded-full"
+                        : "inline-flex items-center px-3 py-1 me-2 text-sm rounded-full bg-green-900 text-green-300"
                     }
                   >
                     {day}
@@ -85,24 +141,13 @@ const AddMatchDaysItem = ({ calendar, isOpen, toggle }) => {
                       type="button"
                       className={
                         !selectedDates.includes(day)
-                          ? "inline-flex items-center p-1 ms-2 text-sm text-gray-500 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-400 dark:hover:text-gray-100"
-                          : "inline-flex items-center p-1 ms-2 text-sm text-green-400 bg-transparent rounded-sm hover:bg-green-200 hover:text-green-900 dark:hover:bg-green-800 dark:hover:text-green-300"
+                          ? "inline-flex items-center p-1 ms-2 text-sm text-gray-600 bg-transparent rounded-sm hover:bg-gray-400 hover:text-gray-50"
+                          : "inline-flex items-center p-1 ms-2 text-sm text-green-400 bg-transparent rounded-sm hover:bg-green-800 hover:text-green-100"
                       }
                       data-dismiss-target="#badge-dismiss-dark"
                       aria-label="Remove"
                       onClick={() => {
-                        console.log("clicked", day);
                         handleDateSelect(day);
-                        //setIsChecked((prevState) => !prevState);
-                        /* const modifiedArray = dates.filter(
-                        (day) => dates.indexOf(day) !== idx
-                      );
-                      setDates(modifiedArray);
-                      setUpdateCalendar((prevState) => ({
-                        ...prevState,
-                        days: modifiedArray,
-                      }));
-                      setEdited(true); */
                       }}
                     >
                       {!selectedDates.includes(day) ? (
@@ -153,7 +198,11 @@ const AddMatchDaysItem = ({ calendar, isOpen, toggle }) => {
           <div className="flex flex-col md:flex-row-reverse justify-around mt-5">
             <div className="px-4 py-3 text-center sm:px-6">
               {edited ? (
-                <PrimaryButton type={"submit"} text={"Mentés"} />
+                <PrimaryButton
+                  type={"submit"}
+                  text={"Mentés"}
+                  onClick={handleSubmit}
+                />
               ) : (
                 <DisabledButton text={"Mentés"} />
               )}

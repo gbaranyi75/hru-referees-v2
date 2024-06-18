@@ -34,7 +34,7 @@ async function createNewCalendar(request) {
       body: JSON.stringify({
         name: request.name,
         days: request.days,
-        users: request.users,
+        userSelections: request.userSelections,
       }),
       cache: "no-store",
     });
@@ -65,7 +65,7 @@ async function updateCalendarData(id, request) {
       body: JSON.stringify({
         name: request.name,
         days: request.days,
-        users: request.users,
+        userSelections: request.userSelections,
       }),
       cache: "no-store",
     });
@@ -104,9 +104,63 @@ async function deleteCalendar(id, request) {
   } catch (error) {}
 }
 
+// Fetch all calendars
+async function fetchUsers() {
+  try {
+    // Handle the case where the domain is not available yet
+    if (!apiDomain) {
+      return [];
+    }
+
+    const res = await fetch(`${apiDomain}/users`, {
+      cache: "no-store",
+    });
+    console.log(res);
+    if (!res.ok) {
+      throw new Error("Failed fetch data");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+// Update existing user
+async function updateUserData(id, request) {
+  try {
+    // Handle the case where the domain is not available yet
+    if (!apiDomain) {
+      return [];
+    }
+    console.log(request.displayName);
+    const res = await fetch(`${apiDomain}/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        displayName: request.name,
+      }),
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      throw new Error("Failed fetch data");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 export {
   fetchCalendarData,
   createNewCalendar,
   updateCalendarData,
   deleteCalendar,
+  fetchUsers,
+  updateUserData,
 };

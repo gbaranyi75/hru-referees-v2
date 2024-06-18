@@ -8,6 +8,7 @@ export const PUT = async (request, { params }) => {
 
     const { id } = params;
     const data = await request.json();
+    console.log(data)
 
     // Get calendar to update
     const existingCalendar = await Calendar.findById(id);

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import { useSession } from "next-auth/react";
+
 import DisabledButton from "@/components/common/DisabledButton";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import OutlinedButton from "@/components/common/OutlinedButton";
@@ -9,9 +9,6 @@ import { useRouter } from "next/navigation";
 import { createNewCalendar } from "@/utils/requests";
 
 const CalendarNew = () => {
-  const { data: session } = useSession();
-  const userId = session?.user?.id;
-
   const [dates, setDates] = useState([]);
   const [eventName, setEventName] = useState("");
   const [edited, setEdited] = useState(false);
@@ -21,12 +18,6 @@ const CalendarNew = () => {
   const [newCalendar, setNewCalendar] = useState({
     name: "",
     days: [],
-    users: [
-      {
-        selectedDays: [],
-        userId: "",
-      },
-    ],
   });
   const router = useRouter();
   const days = dates;
@@ -144,12 +135,11 @@ const CalendarNew = () => {
                     <div className="flex my-1" key={idx}>
                       <span
                         id="badge-dismiss-dark"
-                        className="inline-flex items-center px-2 py-1 me-2 text-sm text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
-                      >
+                        className="inline-flex items-center px-3 py-1 me-2 text-sm text-gray-600 bg-gray-300 rounded-full"                      >
                         {day}
                         <button
                           type="button"
-                          className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+                          className="inline-flex items-center p-1 ms-2 text-sm text-gray-600 bg-transparent rounded-sm hover:bg-gray-400 hover:text-gray-50"
                           data-dismiss-target="#badge-dismiss-dark"
                           aria-label="Remove"
                           onClick={() => {

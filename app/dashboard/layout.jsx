@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import SideMenu from "@/components/Sidemenu";
+import SideMenu from "@/components/SideMenu";
 import CardLayout from "@/components/CardLayout";
 import PrimaryButton from "@/components/common/PrimaryButton";
 

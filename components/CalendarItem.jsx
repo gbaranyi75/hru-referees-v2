@@ -157,12 +157,12 @@ const CalendarItem = ({ calendar, isOpen, toggle }) => {
                         <div className="flex my-1" key={idx}>
                           <span
                             id="badge-dismiss-dark"
-                            className="inline-flex items-center px-2 py-1 me-2 text-sm text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
+                            className="inline-flex items-center px-3 py-1 me-2 text-sm text-gray-600 bg-gray-300 rounded-full"
                           >
                             {day}
                             <button
                               type="button"
-                              className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+                              className="inline-flex items-center p-1 ms-2 text-sm text-gray-600 bg-transparent rounded-sm hover:bg-gray-400 hover:text-gray-50"
                               data-dismiss-target="#badge-dismiss-dark"
                               aria-label="Remove"
                               onClick={() => {

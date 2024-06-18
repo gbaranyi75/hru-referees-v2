@@ -17,6 +17,10 @@ const UserSchema = new Schema(
     role: {
       type: String
     },
+    displayName: {
+      type: String,
+      required: [true, "Username is required"],
+    },
   },
   {
     timestamps: true,

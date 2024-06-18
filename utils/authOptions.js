@@ -20,7 +20,7 @@ export const authOptions = {
   callbacks: {
     // Invoked on successful signin
     async signIn({ profile }) {
-       // 1. Connect to database
+      // 1. Connect to database
       await connectDB();
       // 2. Check if user exists
       const userExists = await User.findOne({ email: profile.email });
@@ -33,7 +33,8 @@ export const authOptions = {
           email: profile.email,
           username,
           image: profile.picture,
-          role: "",
+          role: "user",
+          displayName: profile.name
         });
       }
       // 4. Return true to allow sign in
@@ -43,8 +44,11 @@ export const authOptions = {
     async session({ session }) {
       // 1. Get user from database
       const user = await User.findOne({ email: session.user.email });
+      //console.log(user);
+      //console.log(user.role);
       // 2. Assign the user id to the session
       session.user.id = user._id.toString();
+      session.user.role = user.role;
       // 3. return session
       return session;
     },
