@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import AddMatchDaysItem from "./AddMatchDaysItem";
-import Spinner from "@/components/Spinner";
+import Spinner from "./common/Spinner";
 
 const AddMatchDays = () => {
   const { data: session } = useSession();

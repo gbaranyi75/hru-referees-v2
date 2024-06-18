@@ -1,5 +1,5 @@
 import SideMenu from "@/components/SideMenu";
-import PageLayout from "@/components/PageLayout";
+import PageLayout from "@/components/common/PageLayout";
 
 const DashboardPage = ({ children }) => {
   return (
@@ -8,9 +8,7 @@ const DashboardPage = ({ children }) => {
         <div className="basis-1/4">
           <SideMenu />
         </div>
-        <div className="flex basis-3/4">
-          {children}
-        </div>
+        <div className="flex basis-3/4">{children}</div>
       </div>
     </PageLayout>
   );

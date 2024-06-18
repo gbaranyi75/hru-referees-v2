@@ -1,5 +1,5 @@
 import Profile from "@/components/Profile";
-import PageLayout from "@/components/PageLayout";
+import PageLayout from "@/components/common/PageLayout";
 
 const ProfilePage = () => {
   return (

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import profileDefault from "@/assets/images/profile.png";
-import Spinner from "@/components/Spinner";
+import Spinner from "./common/Spinner";
 import DisabledButton from "./common/DisabledButton";
 import OutlinedButton from "./common/OutlinedButton";
 import PrimaryButton from "./common/PrimaryButton";

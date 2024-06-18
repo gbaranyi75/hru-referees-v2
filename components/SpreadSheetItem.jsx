@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import { MdOutlineExpandMore, MdOutlineExpandLess } from "react-icons/md";
 import checkedImage from "@/assets/images/checked.png";
@@ -9,8 +6,6 @@ import unCheckedImage from "@/assets/images/unchecked.png";
 const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
   const currentDates = calendar.days;
   const userSelections = calendar.userSelections;
-  const [dates, setDates] = useState(currentDates);
-  const [eventName, setEventName] = useState(calendar.name);
 
   const handleOpenSpreadSheet = (e) => {
     e.preventDefault();
@@ -21,7 +16,7 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
     <div className="flex flex-col border-b mx-6 mt-2 bg-white text-gray-600 text-center justify-center z-0">
       <div className="flex md:mx-36 py-5 bg-white text-center justify-center">
         <span>
-          <h2 className="text-lg mr-1 font-semibold">{eventName}</h2>
+          <h2 className="text-lg mr-1 font-semibold">{calendar.name}</h2>
         </span>
         <span
           className="my-auto cursor-pointer"
@@ -42,7 +37,7 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
                 <th scope="col" className="py-2 px-6 text-center">
                   Név
                 </th>
-                {dates.map((date) => (
+                {currentDates.map((date) => (
                   <th scope="col" className="py-3 px-2 text-center" key={date}>
                     {date}
                   </th>
@@ -53,7 +48,7 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
               {userSelections.map((user, idx) => (
                 <tr key={idx} className="bg-white border-b border-gray-300">
                   <th className="p-3 text-center">{user.userName}</th>
-                  {dates.map((date) => (
+                  {currentDates.map((date) => (
                     <td key={date} className="px-1 text-center">
                       <div className="flex justify-center py-[2px]">
                         {user.selectedDays.includes(date) ? (

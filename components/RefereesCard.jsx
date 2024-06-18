@@ -2,7 +2,6 @@ import Image from "next/image";
 
 const RefereesCard = ({ referee }) => {
   return (
-    // <div className="flex flex-col border-b mx-6 mt-6 bg-white text-gray-600 text-center justify-center z-0">
       <div className="rounded-xl shadow-md relative">
         <div className="flex justify-center">
 
@@ -28,7 +27,6 @@ const RefereesCard = ({ referee }) => {
           </div>
         </div>
       </div>
-   // </div>
   );
 };
 export default RefereesCard;

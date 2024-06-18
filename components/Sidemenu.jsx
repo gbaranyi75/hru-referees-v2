@@ -1,11 +1,9 @@
 "use client";
-//import { UserAuth } from 'src/contexts/AuthContext'
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaTable, FaFootballBall, FaVideo, FaUsers } from "react-icons/fa";
 
 const SideMenu = () => {
-  //const { user } = UserAuth()
   const pathname = usePathname();
 
   return (
