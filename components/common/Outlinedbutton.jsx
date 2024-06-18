@@ -1,5 +1,3 @@
-'use client'
-
 const OutlinedButton = ({ text, onClick, type }) => {
     return (
       <>

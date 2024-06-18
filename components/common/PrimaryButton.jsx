@@ -1,5 +1,3 @@
-'use client'
-
 const PrimaryButton = ({ text, type, onClick }) => {
     return (
       <>
