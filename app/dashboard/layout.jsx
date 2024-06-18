@@ -1,4 +1,4 @@
-import SideMenu from "@/components/SideMenu";
+import SideMenu from "@/components/Sidemenu";
 import PageLayout from "@/components/common/PageLayout";
 
 const DashboardPage = ({ children }) => {
