@@ -1,4 +1,3 @@
-//"use client";
 import Link from "next/link";
 import CardLayout from "@/components/CardLayout";
 import PrimaryButton from "@/components/common/PrimaryButton";
@@ -11,7 +10,6 @@ const Calendar = () => {
           <Link href="/dashboard/calendar/new" className="my-6">
             <PrimaryButton
               text={"Új létrehozása"}
-              //onClick={handleEditMode}
             />
           </Link>
         </CardLayout>
@@ -19,7 +17,6 @@ const Calendar = () => {
           <Link href="/dashboard/calendar/edit" className="my-6">
             <PrimaryButton
               text={"Szerkesztés"}
-              //onClick={handleEditMode}
             />
           </Link>
         </CardLayout>
