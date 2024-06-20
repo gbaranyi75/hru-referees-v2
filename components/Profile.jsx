@@ -82,10 +82,10 @@ const Profile = () => {
       <div className="bg-white px-10 py-12 mt-6 md:mt-10 shadow-md rounded-md border">
         <div className="flex flex-col md:flex-row">
           <>
-            <div className="w-1/3 mx-auto justify-center">
+            <div className="w-1/3 mx-auto justify-center text-center">
               <div className="flex mb-4 justify-center">
                 <Image
-                  className="h-32 w-32 xl:h-48 xl:w-48 rounded-full mx-auto"
+                  className="h-20 w-20 md:w-32 md:h-32 xl:h-48 xl:w-48 rounded-full mx-auto"
                   src={profileImage || profileDefault}
                   width={150}
                   height={150}
