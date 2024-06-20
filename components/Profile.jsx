@@ -68,9 +68,8 @@ const Profile = () => {
 
   const handleChange = (e) => {
     setDisplayName(e.target.value);
-    if (e.target.value !== "") {
-      setEdited(true);
-    }
+    if (e.target.value !== "") setEdited(true);
+    if (e.target.value === userData.displayName) setEdited(false);
   };
 
   const handleCancel = () => {
