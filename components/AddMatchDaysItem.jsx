@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { MdOutlineExpandMore, MdOutlineExpandLess } from "react-icons/md";
+import { toast } from 'react-toastify';
 import { updateCalendarData } from "@/utils/requests";
 import DisabledButton from "@/components/common/DisabledButton";
 import PrimaryButton from "@/components/common/PrimaryButton";
@@ -78,6 +79,7 @@ const AddMatchDaysItem = ({
       try {
         await updateCalendarData(calendarId, updateCalendar);
         toggle();
+        toast.success('Sikeres mentés');
       } catch (error) {
         console.error(error.message);
       }

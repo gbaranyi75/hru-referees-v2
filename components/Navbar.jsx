@@ -147,17 +147,6 @@ const Navbar = () => {
                     ))}
                 </div>
               </div>
-              {/* <div className="flex ml-6">
-                <a
-                  className="flex items-center justify-center"
-                  href="https://www.facebook.com/groups/513219272190437"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <FaFacebook color="white" size={32} />
-                  {/* <span className="ml-2">Facebook</span> */}
-              {/*  </a>
-              </div> */}
             </>
           )}
 

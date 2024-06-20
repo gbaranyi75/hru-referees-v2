@@ -7,7 +7,6 @@ import Spinner from "./common/Spinner";
 
 const AddMatchDays = () => {
   const { data: session } = useSession();
-  console.log(session);
   const userId = session?.user?.id;
 
   const [calendars, setCalendars] = useState([]);
