@@ -313,7 +313,7 @@ const Navbar = () => {
               </div>
             {session && (
               <Link
-                href="/properties/add"
+                href="/"
                 onClick={() => setIsMobileMenuOpen((prev) => !prev)}
                 className={`${
                   pathname === "/properties/add" ? "bg-red-300" : ""

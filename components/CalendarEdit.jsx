@@ -34,10 +34,7 @@ const CalendarEdit = async () => {
         sortedData.map((data, index) => (
           <CalendarItem
             key={index}
-            //user={user}
-            //userData={userData}
             calendar={data}
-            //isAdmin={isAdmin}
             isOpen={isOpen === index}
             toggle={toggleOpen(index)}
           />
