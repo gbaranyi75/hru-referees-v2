@@ -43,7 +43,6 @@ export const authOptions = {
     // Modifies the session object
     async session({ session, token }) {
       // 1. Get user from database
-      console.log(token)
       const user = await User.findOne({ email: session.user.email });
       //console.log(user);
       //console.log(user.role);

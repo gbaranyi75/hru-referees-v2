@@ -1,17 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import CalendarItem from "./CalendarItem";
 import OutlinedButton from "@/components/common/OutlinedButton";
-import { fetchCalendarData } from "@/utils/requests";
 import Spinner from "./common/Spinner";
 
 const CalendarEdit = async () => {
   const { data: session } = useSession();
-  const userId = session?.user?.id;
 
   const [isOpen, setIsOpen] = useState(false);
+  const [calendars, setCalendars] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
@@ -22,16 +22,37 @@ const CalendarEdit = async () => {
   const toggleOpen = (id) => () =>
     setIsOpen((isOpen) => (isOpen === id ? null : id));
 
-  const calendars = await fetchCalendarData();
-  const sortedData = calendars.sort((a, b) => {
-    return new Date(b.days[0]).getMonth() - new Date(a.days[0]).getMonth();
-  });
+  useEffect(() => {
+    const fetchSpreadSheets = async () => {
+      try {
+        const res = await fetch("/api/dashboard/calendar");
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
 
-  return (
-    <div className="w-full mb-5">
-      {!sortedData && <Spinner />}
-      {sortedData &&
-        sortedData.map((data, index) => (
+        const data = await res.json();
+        const sortedData = data.sort((a, b) => {
+          return (
+            new Date(b.days[0]).getMonth() - new Date(a.days[0]).getMonth()
+          );
+        });
+        setCalendars(sortedData);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSpreadSheets();
+  }, []);
+
+  return loading ? (
+    <Spinner loading={loading}/>
+  ) : (
+    <section>
+      <div className="w-full mb-5">
+        {calendars.map((data, index) => (
           <CalendarItem
             key={index}
             calendar={data}
@@ -39,14 +60,15 @@ const CalendarEdit = async () => {
             toggle={toggleOpen(index)}
           />
         ))}
-      <div className="px-4 py-3 my-8 text-center sm:px-6">
-        <OutlinedButton
-          text={"Vissza"}
-          type={"button"}
-          onClick={exitEditMode}
-        />
+        <div className="px-4 py-3 my-8 text-center sm:px-6">
+          <OutlinedButton
+            text={"Vissza"}
+            type={"button"}
+            onClick={exitEditMode}
+          />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

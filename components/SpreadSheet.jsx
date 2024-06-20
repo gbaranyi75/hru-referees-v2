@@ -37,7 +37,7 @@ const SpreadSheet = async () => {
   }, []);
 
   return loading ? (
-    <Spinner />
+    <Spinner loading={loading}/>
   ) : (
     <section>
       <div className="w-full mb-5">
