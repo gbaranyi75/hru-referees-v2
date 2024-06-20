@@ -118,7 +118,7 @@ const Navbar = () => {
               </Link>
               {session && (
                 <Link
-                  href="/properties/add"
+                  href="/"
                   className={`${
                     pathname === "/properties/add" ? "bg-red-300" : ""
                   } hover:bg-red-400 text-white px-3 py-2 rounded-md text-xs font-medium`}
