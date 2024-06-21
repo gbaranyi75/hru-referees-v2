@@ -26,13 +26,14 @@ const Navbar = () => {
     const setAuthProviders = async () => {
       const res = await getProviders();
       setProviders(res);
-      setIsAdmin(session?.user?.role === "admin");
+      //setIsAdmin(session?.user?.role === "admin");
     };
     setAuthProviders();
   }, []);
 
   useEffect(() => {
     setIsAdmin(userRole === "admin");
+    console.log("isAdmin", session)
   }, [session]);
 
   return (

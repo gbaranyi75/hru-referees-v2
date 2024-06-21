@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CardLayout from "@/components/CardLayout";
 import PrimaryButton from "@/components/common/PrimaryButton";
+import OutlinedButton from "@/components/common/OutlinedButton";
 
 const Calendar = () => {
   return (
@@ -8,14 +9,14 @@ const Calendar = () => {
       <div className="w-full">
         <CardLayout>
           <Link href="/dashboard/calendar/new" className="my-6">
-            <PrimaryButton
+            <OutlinedButton
               text={"Új létrehozása"}
             />
           </Link>
         </CardLayout>
         <CardLayout>
           <Link href="/dashboard/calendar/edit" className="my-6">
-            <PrimaryButton
+            <OutlinedButton
               text={"Szerkesztés"}
             />
           </Link>

@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import SpreadSheetItem from "./SpreadSheetItem";
 import Spinner from "./common/Spinner";
 
-const SpreadSheet = async () => {
-  const [loading, setLoading] = useState(true);
+const SpreadSheet = () => {
+  const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [calendars, setCalendars] = useState([]);
 
