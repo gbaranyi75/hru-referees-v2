@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const RefereesCard = ({ referee }) => {
   return (
-      <div className="rounded-xl shadow-md relative">
+      <div className="rounded-xl shadow-md hover:shadow-xl relative">
         <div className="flex justify-center">
 
         <Image

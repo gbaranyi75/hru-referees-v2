@@ -1,13 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import CalendarItem from "./CalendarItem";
 import OutlinedButton from "@/components/common/OutlinedButton";
 import Spinner from "./common/Spinner";
 
-const CalendarEdit = async () => {
-  const { data: session } = useSession();
+const CalendarEdit = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [calendars, setCalendars] = useState([]);

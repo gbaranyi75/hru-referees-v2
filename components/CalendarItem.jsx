@@ -82,8 +82,8 @@ const CalendarItem = ({ calendar, isOpen, toggle }) => {
   }, [dates]);
 
   return (
-    <div className="flex flex-col border-b mx-6 mt-6 bg-white text-gray-600 text-center justify-center z-0">
-      <div className="flex md:mx-36 py-5 bg-white text-center justify-center">
+    <div className="flex flex-col border-b mx-6 mt-6 bg-white text-gray-600 text-center drop-shadow-md hover:drop-shadow-xl justify-center z-0">
+      <div className="flex md:mx-36 py-6 bg-white text-center justify-center">
         <span>
           <h2 className="text-lg mr-1 font-semibold">{eventName}</h2>
         </span>

@@ -1,11 +1,13 @@
+'use client'
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { MdOutlineExpandMore, MdOutlineExpandLess } from "react-icons/md";
 import checkedImage from "@/assets/images/checked.png";
 import unCheckedImage from "@/assets/images/unchecked.png";
 
 const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
-  const currentDates = calendar.days;
-  const userSelections = calendar.userSelections;
+  const [currentDates, setCurrentDates] = useState(calendar.days);
+  const [userSelections, setUserSelection] = useState(calendar.userSelections);
 
   const handleOpenSpreadSheet = (e) => {
     e.preventDefault();
@@ -13,8 +15,8 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
   };
 
   return (
-    <div className="flex flex-col border-b mx-6 mt-2 bg-white text-gray-600 text-center justify-center z-0">
-      <div className="flex md:mx-36 py-5 bg-white text-center justify-center">
+    <div className="flex flex-col border-b mx-6 mt-5 bg-white text-gray-600 text-center drop-shadow-md hover:drop-shadow-xl justify-center z-0">
+      <div className="flex md:mx-36 py-6 bg-white text-center justify-center">
         <span>
           <h2 className="text-lg mr-1 font-semibold">{calendar.name}</h2>
         </span>
