@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "@/assets/styles/globals.css";
 
 export const metadata = {
@@ -13,18 +13,18 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body>
+    <html lang="en">
+      <body>
+        <AuthProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <main className="bg-blue-50 flex-grow">{children}</main>
             <Footer />
             <ToastContainer />
           </div>
-        </body>
-      </html>
-    </AuthProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 };
 

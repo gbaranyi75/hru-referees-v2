@@ -15,7 +15,11 @@ const UserSchema = new Schema(
       type: String,
     },
     role: {
-      type: String
+      type: String,
+    },
+    password: {
+      type: String,
+      required: [true, "Pwd is required"],
     },
     displayName: {
       type: String,

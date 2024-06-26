@@ -26,9 +26,9 @@ const SideMenu = () => {
           <div className="w-full mb-1 px-4 md:px-0 text-center">
             <Link
               className={`${
-                pathname === "/merkozesek" ? "bg-gray-300" : ""
+                pathname === "/dashboard/matches" ? "bg-gray-300" : ""
               } w-full items-center inline-flex py-3 text-gray-600 hover:text-gray-700 hover:bg-gray-300 text-sm font-medium rounded-md`}
-              href="/merkozesek"
+              href="/dashboard/matches"
             >
               <FaFootballBall color="gray" size={20} className="mx-3" />
               <span>Mérkőzések</span>

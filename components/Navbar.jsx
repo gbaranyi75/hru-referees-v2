@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/images/hru-logo_sm.png";
@@ -10,7 +9,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session, status, update } = useSession();
   const profileImage = session?.user?.image;
   const userRole = session?.user?.role;
 
@@ -33,7 +32,6 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsAdmin(userRole === "admin");
-    console.log("isAdmin", session)
   }, [session]);
 
   return (
@@ -132,23 +130,16 @@ const Navbar = () => {
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
           {!session && (
-            <>
-              <div className="hidden md:block md:ml-6">
-                <div className="flex items-center">
-                  {providers &&
-                    Object.values(providers).map((provider, index) => (
-                      <button
-                        onClick={() => signIn(provider.id)}
-                        key={index}
-                        className="flex items-center text-gray-100 bg-gray-900 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2"
-                      >
-                        <FaGoogle className="text-gray-100 mr-2" />
-                        <span>Belépés / Regisztráció</span>
-                      </button>
-                    ))}
-                </div>
+            <div className="hidden md:block md:ml-6">
+              <div className="flex items-center">
+                <button
+                  onClick={() => router.push("/auth/belepes")}
+                  className="flex items-center text-sm py-2 px-4 border text-md border-gray-300 text-white hover:bg-red-400 shadow-sm rounded-md"
+                >
+                  <span>Belépés vagy regisztráció</span>
+                </button>
               </div>
-            </>
+            </div>
           )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
@@ -261,7 +252,7 @@ const Navbar = () => {
 
       {/* <!-- Mobile menu, show/hide based on menu state. --> */}
       {isMobileMenuOpen && (
-        <div id="mobile-menu">
+        <div id="mobile-menu" className="md:hidden">
           <div className="space-y-1 px-2 pb-3 pt-2">
             <Link
               href="/tablazat"
@@ -291,39 +282,24 @@ const Navbar = () => {
               Később....
             </Link>
             <div className="flex md:hidden text-white rounded-md px-3 py-2 text-sm font-medium">
-                <a
-                  className="flex items-center justify-center"
-                  href="https://www.facebook.com/groups/513219272190437"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <FaFacebook color="white" size={24} />
-                  <span className="ml-2">Facebook</span>
-                </a>
-              </div>
-            {session && (
-              <Link
-                href="/"
-                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-                className={`${
-                  pathname === "/properties/add" ? "bg-red-300" : ""
-                } text-white block rounded-md px-3 py-2 text-sm font-medium`}
+              <a
+                className="flex items-center justify-center"
+                href="https://www.facebook.com/groups/513219272190437"
+                target="_blank"
+                rel="noreferrer"
               >
-                Add Property
-              </Link>
-            )}
+                <FaFacebook color="white" size={24} />
+                <span className="ml-2">Facebook</span>
+              </a>
+            </div>
+            <Link
+              href="/auth/belepes"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              className="flex justify-center text-sm ml-2 max-w-56 py-2 px-4 border text-md border-gray-300 text-white hover:bg-red-400 shadow-sm rounded-md"
 
-            {!session &&
-              providers &&
-              Object.values(providers).map((provider, index) => (
-                <button
-                  onClick={() => signIn(provider.id)}
-                  key={index}
-                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
-                >
-                  <span>Belépés vagy regisztráció</span>
-                </button>
-              ))}
+            >
+              Belépés vagy regisztráció
+            </Link>
           </div>
         </div>
       )}

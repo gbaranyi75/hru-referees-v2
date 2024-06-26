@@ -1,4 +1,5 @@
 import Image from "next/image";
+import profileDefault from "@/assets/images/profile.png";
 
 const RefereesCard = ({ referee }) => {
   return (
@@ -6,7 +7,7 @@ const RefereesCard = ({ referee }) => {
         <div className="flex justify-center">
 
         <Image
-          src={referee.image}
+          src={referee.image || profileDefault}
           alt="User"
           height={0}
           width={0}

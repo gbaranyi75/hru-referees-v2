@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import profileDefault from "@/assets/images/profile.png";
 import DisabledButton from "./common/DisabledButton";
 import OutlinedButton from "./common/OutlinedButton";
@@ -9,7 +10,7 @@ import PrimaryButton from "./common/PrimaryButton";
 import { toast } from "react-toastify";
 
 const Profile = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const profileImage = session?.user?.image;
   const profileEmail = session?.user?.email;
   const userId = session?.user?.id;
@@ -18,6 +19,8 @@ const Profile = () => {
   const [displayName, setDisplayName] = useState({ displayName: "" });
   const [edited, setEdited] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserData = async (userId) => {
@@ -76,6 +79,8 @@ const Profile = () => {
     setDisplayName(userData.displayName);
     setEdited(false);
   };
+
+  if (status !== "authenticated") router.push("/unauthenticated");
 
   return (
     !loading && (
