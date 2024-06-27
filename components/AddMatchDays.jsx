@@ -33,7 +33,7 @@ const AddMatchDays = () => {
         });
         setCalendars(sortedData);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -56,7 +56,7 @@ const AddMatchDays = () => {
           setDisplayName(data.displayName);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         //setLoading(false);
       }

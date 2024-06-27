@@ -21,7 +21,6 @@ export const POST = async (request, { params }) => {
 
     const email = params.credentials.email;
 
-    console.log(email);
     const user = await User.findOne({ email });
 
     return new Response(JSON.stringify(user), { status: 200 });

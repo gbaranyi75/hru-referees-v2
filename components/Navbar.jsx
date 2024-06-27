@@ -264,15 +264,15 @@ const Navbar = () => {
               Táblázat
             </Link>
             <Link
-              href="/"
+              href="/merkozesek"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               className={`${
-                pathname === "/" ? "bg-red-300" : ""
+                pathname === "/merkozesek" ? "bg-red-300" : ""
               } text-white block rounded-md px-3 py-2 text-sm font-medium`}
             >
               Mérkőzések
             </Link>
-            <Link
+            {/* <Link
               href="/"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               className={`${
@@ -280,7 +280,7 @@ const Navbar = () => {
               } text-white block rounded-md px-3 py-2 text-sm font-medium`}
             >
               Később....
-            </Link>
+            </Link> */}
             <div className="flex md:hidden text-white rounded-md px-3 py-2 text-sm font-medium">
               <a
                 className="flex items-center justify-center"

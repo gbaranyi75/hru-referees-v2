@@ -40,7 +40,7 @@ const RegisterPage = () => {
           password,
         }),
       });
-      console.log(res.status);
+
       if (res.status === 201) {
         const signInData = await signIn("credentials", {
           email: email,
@@ -49,12 +49,10 @@ const RegisterPage = () => {
           redirect: false,
         });
         if (signInData?.error) {
-          console.log(signInData.error)
+          console.error(signInData.error);
         } else {
           router.refresh();
           router.push("/");
-          console.log(signInData)
-    
         }
       }
     } catch (err) {

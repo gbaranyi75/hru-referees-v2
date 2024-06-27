@@ -73,10 +73,9 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
         }
 
         const data = await res.json();
-        console.log(data);
         setUsers(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -478,7 +477,6 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
                     onChange={(date) => {
                       setDate(new Date(date).toISOString().slice(0, 10));
                       setEdited(true);
-                      console.log(date);
                     }}
                     value={date}
                     onClickDay={() => setShowCalendar(false)}

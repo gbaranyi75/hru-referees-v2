@@ -27,7 +27,6 @@ const Profile = () => {
       if (!userId) {
         return;
       }
-      console.log("szaladok");
       try {
         const res = await fetch(`/api/users/${userId}`);
 
@@ -37,7 +36,7 @@ const Profile = () => {
           setDisplayName(data.displayName);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -56,7 +55,6 @@ const Profile = () => {
           displayName: displayName,
         }),
       });
-      console.log(res);
 
       if (res.status === 200) {
         toast.success("Sikeres mentés");
@@ -64,7 +62,7 @@ const Profile = () => {
         toast.error("Sikertelen mentés");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Valami hiba történt");
     }
   };

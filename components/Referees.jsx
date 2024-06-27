@@ -17,10 +17,9 @@ const Referees = () => {
         }
 
         const data = await res.json();
-        console.log(data);
         setUsers(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }

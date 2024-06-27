@@ -82,7 +82,6 @@ async function updateCalendarData(id, request) {
 
 // Delete calendar
 async function deleteCalendar(id, request) {
-  console.log(id);
   try {
     // Handle the case where the domain is not available yet
     if (!apiDomain) {
@@ -115,7 +114,6 @@ async function fetchUsers() {
     const res = await fetch(`${apiDomain}/users`, {
       cache: "no-store",
     });
-    console.log(res);
     if (!res.ok) {
       throw new Error("Failed fetch data");
     }
@@ -134,7 +132,6 @@ async function updateUserData(id, request) {
     if (!apiDomain) {
       return [];
     }
-    console.log(request.displayName);
     const res = await fetch(`${apiDomain}/users/${id}`, {
       method: "PUT",
       headers: {

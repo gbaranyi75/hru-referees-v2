@@ -52,7 +52,7 @@ export const authOptions = {
             throw new Error("User not found!");
           }
         } catch (err) {
-          console.log(err);
+          console.error(err);
           throw new Error(err);
         }
       },
@@ -64,7 +64,6 @@ export const authOptions = {
       // 1. Connect to database
       await connectDB();
       // 2. Check if user exists
-      console.log(credentials.email)
       const userExists = profile
         ? await User.findOne({ email: profile.email })
         : await User.findOne({ email: credentials.email });
