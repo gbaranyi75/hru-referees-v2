@@ -49,25 +49,25 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
             <tbody>
               {userSelections.map((user, idx) => (
                 <tr key={idx} className="bg-white border-b border-gray-300">
-                  <th className="p-3 text-center">{user.userName}</th>
+                  <th className="p-2 text-center">{user.userName}</th>
                   {currentDates.map((date) => (
                     <td key={date} className="px-1 text-center">
-                      <div className="flex justify-center py-[2px]">
+                      <div className="flex justify-center">
                         {user.selectedDays.includes(date) ? (
                           <Image
-                            className="h-6 w-6"
+                            className="h-4 w-4"
                             src={checkedImage}
                             alt="logo"
-                            width={12}
-                            height={12}
+                            width={10}
+                            height={10}
                           />
                         ) : (
                           <Image
-                            className="h-6 w-6"
+                            className="h-4 w-4"
                             src={unCheckedImage}
                             alt="logo"
-                            width={12}
-                            height={12}
+                            width={10}
+                            height={10}
                           />
                         )}
                       </div>

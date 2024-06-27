@@ -31,7 +31,6 @@ export const POST = async (request) => {
     const data = await request.json();
     const newCalendar = new Calendar(data);
     const createdCalendar = await newCalendar.save();
-    console.log(createdCalendar)
 
     return new Response(JSON.stringify(createdCalendar), {
       status: 200,

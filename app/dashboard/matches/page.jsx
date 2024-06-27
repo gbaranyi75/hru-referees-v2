@@ -2,21 +2,21 @@ import Link from "next/link";
 import CardLayout from "@/components/CardLayout";
 import OutlinedButton from "@/components/common/OutlinedButton";
 
-const CalendarPage = () => {
+const MatchesPage = () => {
   return (
     <div className="w-full flex flex-col md:flex-row bg-blue-50">
       <div className="w-full">
         <CardLayout>
-          <Link href="/dashboard/calendar/new" className="my-6">
+          <Link href="/dashboard/matches/new" className="my-6">
             <OutlinedButton
-              text={"Új táblázat létrehozása"}
+              text={"Új mérkőzés létrehozása"}
             />
           </Link>
         </CardLayout>
         <CardLayout>
-          <Link href="/dashboard/calendar/edit" className="my-6">
+          <Link href="/dashboard/matches/edit" className="my-6">
             <OutlinedButton
-              text={"Táblázatok szerkesztése"}
+              text={"Mérkőzések szerkesztése"}
             />
           </Link>
         </CardLayout>
@@ -26,4 +26,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default MatchesPage;

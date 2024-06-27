@@ -30,7 +30,6 @@ export const PUT = async (request, { params }) => {
   
       const { id } = params;
       const data = await request.json();
-      console.log(data)
   
       // Get user to update
       const existingCalendar = await User.findById(id);

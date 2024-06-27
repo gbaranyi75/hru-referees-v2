@@ -14,3 +14,18 @@ export const GET = async (request) => {
     return new Response("something went wrong", { status: 500 });
   }
 };
+
+export const POST = async (request, { params }) => {
+  try {
+    await connectDB();
+
+    const email = params.credentials.email;
+
+    const user = await User.findOne({ email });
+
+    return new Response(JSON.stringify(user), { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response("something went wrong", { status: 500 });
+  }
+};

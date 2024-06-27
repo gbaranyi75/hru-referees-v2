@@ -1,7 +1,7 @@
 import CardLayout from "@/components/CardLayout";
 import CalendarNew from "@/components/CalendarNew";
 
-const CreateCalendar = () => {
+const CreateCalendarPage = () => {
   return (
     <div className="w-full flex flex-col md:flex-row bg-blue-50">
       <CardLayout>
@@ -10,4 +10,4 @@ const CreateCalendar = () => {
     </div>
   );
 };
-export default CreateCalendar;
+export default CreateCalendarPage;

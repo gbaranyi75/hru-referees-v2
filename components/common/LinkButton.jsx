@@ -9,7 +9,7 @@ const LinkButton = ({ text, link }) => {
         type="button"
         className="justify-center text-blue-500 hover:underline"
       >
-        <Link to={link}>{text}</Link>
+        <Link href={link}>{text}</Link>
       </button>
     </>
   )

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import SpreadSheetItem from "./SpreadSheetItem";
 import Spinner from "./common/Spinner";
+import LoadingComponent from "./common/LoadingComponent";
 
 const SpreadSheet = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ const SpreadSheet = () => {
         });
         setCalendars(sortedData);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -37,7 +38,8 @@ const SpreadSheet = () => {
   }, []);
 
   return loading ? (
-    <Spinner loading={loading}/>
+    // <Spinner loading={loading}/>
+    <LoadingComponent text={"Táblázatok betöltése..."}/>
   ) : (
     <section>
       <div className="w-full mb-5">
