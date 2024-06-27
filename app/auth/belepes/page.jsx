@@ -100,7 +100,7 @@ const LoginPage = () => {
             </div>
             <hr />
             <div className="flex items-center mt-5 justify-center">
-              {!providers && <LoadingComponent />}
+              {!providers && <LoadingComponent text={"Betöltés..."} />}
               {providers &&
                 Object.values(providers).map(
                   (provider, index) =>

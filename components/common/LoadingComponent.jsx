@@ -1,4 +1,4 @@
-const LoadingComponent = ({ text, onClick, type }) => {
+const LoadingComponent = ({ text }) => {
   return (
     <>
       <div className="inline-flex items-center justify-center py-2 px-4 text-gray-400 text-sm">
@@ -19,7 +19,7 @@ const LoadingComponent = ({ text, onClick, type }) => {
             fill="#1C64F2"
           />
         </svg>
-        Betöltés...
+        {text}
       </div>
     </>
   );
