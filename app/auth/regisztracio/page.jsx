@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession, getProviders } from "next-auth/react";
 import PageLayout from "@/components/common/PageLayout";
 import PrimaryButton from "@/components/common/PrimaryButton";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultFormFields = {
   displayName: "",
@@ -26,7 +28,11 @@ const RegisterPage = () => {
 
     try {
       if (password !== confirmPassword) {
-        alert("A jelszavaknak meg kell egyezniük");
+        toast.error("A jelszavaknak meg kell egyezniük");
+        return;
+      }
+      if (password.length < 8) {
+        toast.error("A jelszó legalább 8 karakter legyen");
         return;
       }
       const res = await fetch("/api/auth/register", {
@@ -48,6 +54,7 @@ const RegisterPage = () => {
           callbackUrl: "/",
           redirect: false,
         });
+        toast.success("Sikeres regisztráció");
         if (signInData?.error) {
           console.error(signInData.error);
         } else {
