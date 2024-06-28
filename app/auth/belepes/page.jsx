@@ -8,6 +8,8 @@ import Spinner from "@/components/common/Spinner";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import LinkButton from "@/components/common/LinkButton";
 import LoadingComponent from "@/components/common/LoadingComponent";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultFormFields = {
   email: "",
@@ -20,13 +22,11 @@ const LoginPage = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { email, password } = formFields;
-  const [user, setUser] = useState();
 
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders();
       setProviders(res);
-      //setIsAdmin(session?.user?.role === "admin");
     };
     setAuthProviders();
   }, []);
@@ -56,6 +56,7 @@ const LoginPage = () => {
     });
     if (signInData?.error) {
       console.error(signInData.error);
+      toast.error(signInData.error)
     } else {
       router.refresh();
       router.push("/");
@@ -110,7 +111,7 @@ const LoginPage = () => {
                         key={index}
                         className="flex items-center py-2 px-4 border text-md border-blue-200 text-blue-400 hover:border-blue-300 hover:text-blue-500 shadow-sm font-medium rounded-md"
                       >
-                        <FaGoogle className="text-blue-200 mr-3" />
+                        <FaGoogle className="text-blue-500 mr-3" />
                         <span>Belépés Google fiókkal</span>
                       </button>
                     )

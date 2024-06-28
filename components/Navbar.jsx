@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/images/hru-logo_sm.png";
 import profileDefault from "@/assets/images/profile.png";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
-import { FaGoogle, FaFacebook } from "react-icons/fa";
+import { signOut, useSession, getProviders } from "next-auth/react";
+import { FaFacebook } from "react-icons/fa";
 
 const Navbar = () => {
   const { data: session, status, update } = useSession();
