@@ -11,7 +11,7 @@ const InfoBoxes = () => {
             buttonInfo={{
               text: 'Ugrás a listára',
               link: '/jatekvezetok',
-              backgroundColor: 'bg-black',
+              backgroundColor: 'bg-gray-800',
             }}
           >
             Jelenleg aktívan dolgozó hazai játékvezetők.
