@@ -1,46 +1,19 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SpreadSheetItem from "./SpreadSheetItem";
 import Spinner from "./common/Spinner";
-import LoadingComponent from "./common/LoadingComponent";
+import useCalendars from "@/hooks/useCalendars";
 
 const SpreadSheet = () => {
-  const [loading, setLoading] = useState(false);
+  const { calendars, loading } = useCalendars();
   const [isOpen, setIsOpen] = useState(false);
-  const [calendars, setCalendars] = useState([]);
 
   const toggleOpen = (id) => () =>
     setIsOpen((isOpen) => (isOpen === id ? null : id));
 
-  useEffect(() => {
-    const fetchSpreadSheets = async () => {
-      try {
-        const res = await fetch("/api/dashboard/calendar");
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
+  if (loading) return <Spinner />;
 
-        const data = await res.json();
-        const sortedData = data.sort((a, b) => {
-          return (
-            new Date(b.days[0]).getMonth() - new Date(a.days[0]).getMonth()
-          );
-        });
-        setCalendars(sortedData);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSpreadSheets();
-  }, []);
-
-  return loading ? (
-    // <Spinner loading={loading}/>
-    <LoadingComponent text={"Táblázatok betöltése..."}/>
-  ) : (
+  return (
     <section>
       <div className="w-full mb-5">
         {calendars.map((data, index) => (

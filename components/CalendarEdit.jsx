@@ -4,13 +4,11 @@ import { useRouter } from "next/navigation";
 import CalendarItem from "./CalendarItem";
 import OutlinedButton from "@/components/common/OutlinedButton";
 import Spinner from "./common/Spinner";
+import useCalendars from "@/hooks/useCalendars";
 
 const CalendarEdit = () => {
-
+  const { calendars, loading } = useCalendars();
   const [isOpen, setIsOpen] = useState(false);
-  const [calendars, setCalendars] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const router = useRouter();
 
   const exitEditMode = () => {
@@ -20,44 +18,20 @@ const CalendarEdit = () => {
   const toggleOpen = (id) => () =>
     setIsOpen((isOpen) => (isOpen === id ? null : id));
 
-  useEffect(() => {
-    const fetchSpreadSheets = async () => {
-      try {
-        const res = await fetch("/api/dashboard/calendar");
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
+  if (loading) return <Spinner />;
 
-        const data = await res.json();
-        const sortedData = data.sort((a, b) => {
-          return (
-            new Date(b.days[0]).getMonth() - new Date(a.days[0]).getMonth()
-          );
-        });
-        setCalendars(sortedData);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSpreadSheets();
-  }, []);
-
-  return loading ? (
-    <Spinner loading={loading}/>
-  ) : (
+  return (
     <section>
       <div className="w-full mb-5">
-        {calendars.map((data, index) => (
-          <CalendarItem
-            key={index}
-            calendar={data}
-            isOpen={isOpen === index}
-            toggle={toggleOpen(index)}
-          />
-        ))}
+        {calendars &&
+          calendars.map((data, index) => (
+            <CalendarItem
+              key={index}
+              calendar={data}
+              isOpen={isOpen === index}
+              toggle={toggleOpen(index)}
+            />
+          ))}
         <div className="px-4 py-3 my-8 text-center sm:px-6">
           <OutlinedButton
             text={"Vissza"}
