@@ -63,8 +63,6 @@ async function updateCalendarData(id, request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: request.name,
-        days: request.days,
         userSelections: request.userSelections,
       }),
       cache: "no-store",

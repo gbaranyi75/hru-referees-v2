@@ -19,9 +19,7 @@ const AddMatchDaysItem = ({
     myCurrentDates,
     ...calendar.days
   );
-  const [updateCalendar, setUpdateCalendar] = useState({
-    userSelections: [],
-  });
+
   const calendarId = calendar._id;
 
   const setMyDays = () => {
@@ -68,26 +66,13 @@ const AddMatchDaysItem = ({
       });
     }
 
-    setUpdateCalendar((prevState) => ({
-      ...prevState,
+    await updateCalendarData(calendarId, {
       userSelections: currentUserSelections,
-    }));
-    await updateCalendarData(calendarId, updateCalendar);
+    });
   };
 
   useEffect(() => {
-    setUpdateCalendar({
-      userSelections: [
-        {
-          selectedDays: [],
-          userName: displayName,
-          userId: userID,
-        },
-      ],
-    });
-
     setMyDays();
-
   }, [session]);
 
   return (

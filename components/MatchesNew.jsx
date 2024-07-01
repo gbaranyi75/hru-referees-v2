@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
 import Calendar from "react-calendar";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import {
   teams,
   types,
@@ -18,6 +17,7 @@ import {
 import OutlinedButton from "./common/OutlinedButton";
 import PrimaryButton from "./common/PrimaryButton";
 import DisabledButton from "./common/DisabledButton";
+import useUsers from "@/hooks/useUsers";
 
 const defaultFormFields = {
   home: "",
@@ -35,8 +35,10 @@ const defaultFormFields = {
 };
 
 const MatchDetailsEdit = ({ resetEditMode }) => {
+  const {users, loading} = useUsers()
+
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const [users, setUsers] = useState([]);
+  const [refList, setRefList] = useState([]);
   const [edited, setEdited] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
   const [selectedType, setSelectedType] = useState();
@@ -44,7 +46,6 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
   const [refereesList, setRefereesList] = useState(null);
   const [refArray, setRefArray] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [date, setDate] = useState();
   const hoursArr = hours;
   const {
@@ -62,27 +63,6 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
   } = formFields;
 
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const res = await fetch("/api/users");
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const data = await res.json();
-        setUsers(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   const handleCalendarOpen = (e) => {
     e.preventDefault();
@@ -106,7 +86,6 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
           await createNewMatch(formFields);
           resetFormFields();
           resetEditMode();
-          //getAllUsers()
         } catch (error) {
           console.error(error.message);
         }
@@ -183,7 +162,7 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
 
   const createRefArray = () => {
     setRefArray(
-      users.map((n) => ({
+      refList.map((n) => ({
         label: n.displayName,
         value: n.displayName,
       }))
@@ -202,6 +181,10 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
       setIsSingleMatch(true);
     }
   }, [selectedType]);
+
+  useEffect(() => {
+    setRefList(users)
+  }, [users])
 
   return (
     <div className="mt-5  mb-6 lg:mx-16 md:mt-0 bg-white md:text-left">
@@ -226,7 +209,7 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
                     handleTypeChange(e);
                   }}
                 >
-                  <option selected disabled={true} value="">
+                 <option selected disabled={true} value="">
                     --Válassz típust--
                   </option>
                   {types.map((type, id) => (
@@ -386,7 +369,7 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
                       <option selected disabled={true} value="">
                         --Válassz játékvezetőt--
                       </option>
-                      {users.map((referee, id) => (
+                      {refList.map((referee, id) => (
                         <option key={id}>{referee.displayName}</option>
                       ))}
                     </select>
@@ -411,7 +394,7 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
                       <option selected disabled={true} value="">
                         --Válassz asszisztenst--
                       </option>
-                      {users.map((referee, id) => (
+                      {refList.map((referee, id) => (
                         <option key={id}>{referee.displayName}</option>
                       ))}
                     </select>
@@ -436,7 +419,7 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
                       <option selected disabled={true} value="">
                         --Válassz asszisztenst--
                       </option>
-                      {users.map((assist2, id) => (
+                      {refList.map((assist2, id) => (
                         <option key={id}>{assist2.displayName}</option>
                       ))}
                     </select>
@@ -545,7 +528,6 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
           </div>
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 };

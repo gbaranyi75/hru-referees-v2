@@ -1,6 +1,7 @@
 import connectDB from "@/config/database";
 import User from "@/models/User";
-import { getSessionUser } from '@/utils/getSessionUser';
+import { getSessionUser } from "@/utils/getSessionUser";
+import { NextResponse } from "next/server";
 
 // GET /api/users/:userId
 export const GET = async (request, { params }) => {
@@ -14,6 +15,10 @@ export const GET = async (request, { params }) => {
     }
 
     const user = await User.findById(userId);
+    if (user === null) {
+      console.log("nincs ilyen id");
+      return new NextResponse("Nincs ilyen ID", { status: 500 });
+    }
     return new Response(JSON.stringify(user), {
       status: 200,
     });
@@ -25,22 +30,22 @@ export const GET = async (request, { params }) => {
 
 // Update user
 export const PUT = async (request, { params }) => {
-    try {
-      await connectDB();
-  
-      const { id } = params;
-      const data = await request.json();
-  
-      // Get user to update
-      const existingCalendar = await User.findById(id);
-  
-      const updatedUser = await User.findByIdAndUpdate(id, data);
-  
-      return new Response(JSON.stringify(updatedUser), {
-        status: 200,
-      });
-    } catch (error) {
-      console.error(error);
-      return new Response("something went wrong", { status: 500 });
-    }
-  };
+  try {
+    await connectDB();
+
+    const { id } = params;
+    const data = await request.json();
+
+    // Get user to update
+    const existingCalendar = await User.findById(id);
+
+    const updatedUser = await User.findByIdAndUpdate(id, data);
+
+    return new Response(JSON.stringify(updatedUser), {
+      status: 200,
+    });
+  } catch (error) {
+    console.error(error);
+    return new Response("something went wrong", { status: 500 });
+  }
+};
