@@ -20,7 +20,7 @@ const MainLayout = ({ children }) => {
             <Navbar />
             <main className="bg-blue-50 flex-grow">{children}</main>
             <Footer />
-            <ToastContainer />
+            <ToastContainer position="bottom-center" autoClose={2000} />
           </div>
         </AuthProvider>
       </body>

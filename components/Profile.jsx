@@ -1,52 +1,25 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import profileDefault from "@/assets/images/profile.png";
 import DisabledButton from "./common/DisabledButton";
 import OutlinedButton from "./common/OutlinedButton";
 import PrimaryButton from "./common/PrimaryButton";
 import { toast } from "react-toastify";
 import Spinner from "./common/Spinner";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Profile = () => {
-  const { data: session, status } = useSession();
-  const profileImage = session?.user?.image;
-  const profileEmail = session?.user?.email;
-  const userId = session?.user?.id;
+  const { user, loading } = useCurrentUser();
+  const userId = user?.id;
 
-  const [userData, setUserData] = useState();
-  const [displayName, setDisplayName] = useState({ displayName: "" });
-  const [edited, setEdited] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  const router = useRouter();
+  const [userData, setUserData] = useState({});
+  const [displayName, setDisplayName] = useState();
 
   useEffect(() => {
-    const fetchUserData = async (userId) => {
-      if (!userId) {
-        return;
-      }
-      try {
-        const res = await fetch(`/api/users/${userId}`);
-
-        if (res.status === 200) {
-          const data = await res.json();
-          setUserData(data);
-          setDisplayName(data.displayName);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (session?.user?.id) {
-      fetchUserData(userId);
-    }
-  }, [session]);
+    setUserData(user);
+    setDisplayName(user?.displayName);
+  }, [user]);
 
   const updateDisplayName = async (userId) => {
     try {
@@ -59,7 +32,6 @@ const Profile = () => {
 
       if (res.status === 200) {
         toast.success("Sikeres mentés");
-        setEdited(false)
       } else {
         toast.error("Sikertelen mentés");
       }
@@ -71,16 +43,11 @@ const Profile = () => {
 
   const handleChange = (e) => {
     setDisplayName(e.target.value);
-    if (e.target.value !== "") setEdited(true);
-    if (e.target.value === userData.displayName) setEdited(false);
   };
 
   const handleCancel = () => {
     setDisplayName(userData.displayName);
-    setEdited(false);
   };
-
-  if (status !== "authenticated") router.push("/unauthenticated");
 
   if (loading) return <Spinner />;
 
@@ -92,7 +59,7 @@ const Profile = () => {
             <div className="flex mb-4 justify-center">
               <Image
                 className="h-20 w-20 md:w-32 md:h-32 xl:h-48 xl:w-48 rounded-full mx-auto"
-                src={profileImage || profileDefault}
+                src={userData?.image || profileDefault}
                 width={150}
                 height={150}
                 alt="User"
@@ -103,7 +70,7 @@ const Profile = () => {
               <span className="font-bold block">Név: </span> {displayName}
             </h2>
             <h2 className="text-base">
-              <span className="font-bold block">Email: </span> {profileEmail}
+              <span className="font-bold block">Email: </span> {userData?.email}
             </h2>
           </div>
           <div className="w-full mt-5 md:mx-12 xl:mx-32 md:mt-0 bg-white md:text-left">
@@ -134,15 +101,11 @@ const Profile = () => {
                   </div>
                 </div>
                 <div className="mt-5 md:mt-10 px-4 py-3 text-center sm:px-6">
-                  {edited ? (
-                    <PrimaryButton
-                      type={"button"}
-                      text={"Mentés"}
-                      onClick={() => updateDisplayName(userId)}
-                    />
-                  ) : (
-                    <DisabledButton text={"Mentés"} />
-                  )}
+                  <PrimaryButton
+                    type={"button"}
+                    text={"Mentés"}
+                    onClick={() => updateDisplayName(userData?._id)}
+                  />
                 </div>
                 <div className="mb-5 md:mb-10 px-4 py-3 text-center sm:px-6">
                   <OutlinedButton

@@ -7,9 +7,10 @@ import logo from "@/assets/images/hru-logo_sm.png";
 import profileDefault from "@/assets/images/profile.png";
 import { signOut, useSession, getProviders } from "next-auth/react";
 import { FaFacebook } from "react-icons/fa";
+import LoadingComponent from "./common/LoadingComponent";
 
 const Navbar = () => {
-  const { data: session, status, update } = useSession();
+  const { data: session, loading, status, update } = useSession();
   const profileImage = session?.user?.image;
   const userRole = session?.user?.role;
 
@@ -18,14 +19,12 @@ const Navbar = () => {
   const [providers, setProviders] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
-
   const pathname = usePathname();
 
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders();
       setProviders(res);
-      //setIsAdmin(session?.user?.role === "admin");
     };
     setAuthProviders();
   }, []);
@@ -129,7 +128,7 @@ const Navbar = () => {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!session && (
+          {!session && status === "unauthenticated" && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
                 <button
@@ -141,6 +140,8 @@ const Navbar = () => {
               </div>
             </div>
           )}
+
+          {status === "loading" && (<LoadingComponent text={"Profil betöltése..."} textColor={"text-gray-200"}/>)}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
           {session && (

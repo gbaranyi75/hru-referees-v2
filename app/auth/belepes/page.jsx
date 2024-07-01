@@ -9,7 +9,6 @@ import PrimaryButton from "@/components/common/PrimaryButton";
 import LinkButton from "@/components/common/LinkButton";
 import LoadingComponent from "@/components/common/LoadingComponent";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const defaultFormFields = {
   email: "",
@@ -101,7 +100,7 @@ const LoginPage = () => {
             </div>
             <hr />
             <div className="flex items-center mt-5 justify-center">
-              {!providers && <LoadingComponent text={"Betöltés..."} />}
+              {!providers && <LoadingComponent text={"Betöltés..."} textColor={"text-gray-400"}/>}
               {providers &&
                 Object.values(providers).map(
                   (provider, index) =>

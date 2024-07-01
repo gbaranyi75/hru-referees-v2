@@ -5,7 +5,6 @@ import { signIn, useSession, getProviders } from "next-auth/react";
 import PageLayout from "@/components/common/PageLayout";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const defaultFormFields = {
   displayName: "",
