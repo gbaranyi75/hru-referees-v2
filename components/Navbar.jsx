@@ -42,7 +42,7 @@ const Navbar = () => {
             <button
               type="button"
               id="mobile-dropdown-button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="relative inline-flex items-center justify-center rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-200"
               aria-controls="mobile-menu"
               aria-expanded="false"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -141,7 +141,12 @@ const Navbar = () => {
             </div>
           )}
 
-          {status === "loading" && (<LoadingComponent text={"Profil betöltése..."} textColor={"text-gray-200"}/>)}
+          {status === "loading" && (
+            <LoadingComponent
+              text={"Betöltés..."}
+              textColor={"text-gray-200"}
+            />
+          )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
           {session && (
@@ -182,7 +187,7 @@ const Navbar = () => {
                     {isAdmin && (
                       <Link
                         href="/dashboard/calendar"
-                        className="block px-4 py-2 text-sm text-gray-700"
+                        className="block px-4 py-3 text-sm text-gray-700"
                         role="menuitem"
                         tabIndex="-1"
                         id="user-menu-item-0"
@@ -195,7 +200,7 @@ const Navbar = () => {
                     )}
                     <Link
                       href="/profil"
-                      className="block px-4 py-2 text-sm text-gray-700"
+                      className="block px-4 py-3 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-1"
@@ -207,7 +212,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       href="/jv-elerhetoseg"
-                      className="block px-4 py-2 text-sm text-gray-700"
+                      className="block px-4 py-3 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
@@ -219,7 +224,7 @@ const Navbar = () => {
                     </Link>
                     <hr />
                     <button
-                      className="block px-4 py-2 text-sm text-gray-700"
+                      className="block px-4 py-3 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-3"
@@ -260,7 +265,7 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               className={`${
                 pathname === "/tablazat" ? "bg-red-300" : ""
-              } text-white block rounded-md px-3 py-2 text-sm font-medium`}
+              } text-white block rounded-md px-3 py-3 text-sm font-medium`}
             >
               Táblázat
             </Link>
@@ -269,7 +274,7 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               className={`${
                 pathname === "/merkozesek" ? "bg-red-300" : ""
-              } text-white block rounded-md px-3 py-2 text-sm font-medium`}
+              } text-white block rounded-md px-3 py-3 text-sm font-medium`}
             >
               Mérkőzések
             </Link>
@@ -282,7 +287,7 @@ const Navbar = () => {
             >
               Később....
             </Link> */}
-            <div className="flex md:hidden text-white rounded-md px-3 py-2 text-sm font-medium">
+            <div className="flex md:hidden text-white rounded-md px-3 py-3 text-sm font-medium">
               <a
                 className="flex items-center justify-center"
                 href="https://www.facebook.com/groups/513219272190437"
@@ -293,14 +298,15 @@ const Navbar = () => {
                 <span className="ml-2">Facebook</span>
               </a>
             </div>
-            <Link
-              href="/auth/belepes"
-              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              className="flex justify-center text-sm ml-2 max-w-56 py-2 px-4 border text-md border-gray-300 text-white hover:bg-red-400 shadow-sm rounded-md"
-
-            >
-              Belépés vagy regisztráció
-            </Link>
+            {!session && (
+              <Link
+                href="/auth/belepes"
+                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                className="flex justify-center text-sm ml-2 max-w-56 py-2 px-4 border text-md border-gray-300 text-white hover:bg-red-400 shadow-sm rounded-md"
+              >
+                Belépés vagy regisztráció
+              </Link>
+            )}
           </div>
         </div>
       )}
