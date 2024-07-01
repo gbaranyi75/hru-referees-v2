@@ -187,7 +187,7 @@ const Navbar = () => {
                     {isAdmin && (
                       <Link
                         href="/dashboard/calendar"
-                        className="block px-4 py-3 text-sm text-gray-700"
+                        className="block px-4 py-3 md:py-2 text-sm text-gray-700"
                         role="menuitem"
                         tabIndex="-1"
                         id="user-menu-item-0"
@@ -200,7 +200,7 @@ const Navbar = () => {
                     )}
                     <Link
                       href="/profil"
-                      className="block px-4 py-3 text-sm text-gray-700"
+                      className="block px-4 py-3 md:py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-1"
@@ -212,7 +212,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       href="/jv-elerhetoseg"
-                      className="block px-4 py-3 text-sm text-gray-700"
+                      className="block px-4 py-3 md:py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
@@ -224,7 +224,7 @@ const Navbar = () => {
                     </Link>
                     <hr />
                     <button
-                      className="block px-4 py-3 text-sm text-gray-700"
+                      className="block px-4 py-3 md:py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-3"
