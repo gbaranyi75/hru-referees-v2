@@ -6,9 +6,11 @@ import DisabledButton from "@/components/common/DisabledButton";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import OutlinedButton from "@/components/common/OutlinedButton";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { createNewCalendar } from "@/utils/requests";
 
 const CalendarNew = () => {
+  const {data: session} = useSession()
   const [dates, setDates] = useState([]);
   const [eventName, setEventName] = useState("");
   const [edited, setEdited] = useState(false);
@@ -35,6 +37,9 @@ const CalendarNew = () => {
     e.preventDefault();
     if (dates.length !== 0 && eventName !== "") {
       try {
+        if (!session) {
+          return
+        }
         await createNewCalendar(newCalendar).then(exitEditMode());
         setDates([]);
         setEventName("");
