@@ -99,7 +99,7 @@ export const authOptions = {
     maxAge: 30 * 24 * 60 * 60,
   },
   pages: {
-    error: "/auth/belepes",
+    error: "/error",
     signIn: "/auth/belepes",
   },
 };

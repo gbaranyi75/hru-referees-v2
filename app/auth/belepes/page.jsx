@@ -30,12 +30,6 @@ const LoginPage = () => {
     setAuthProviders();
   }, []);
 
-  if (status === "loading") {
-    return <Spinner />;
-  } else if (status === "authenticated") {
-    router.push("/");
-  }
-
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -51,16 +45,27 @@ const LoginPage = () => {
       email: email,
       password: password,
       callbackUrl: "/",
-      redirect: false,
     });
     if (signInData?.error) {
       console.error(signInData.error);
-      toast.error(signInData.error)
-    } else {
-      router.refresh();
-      router.push("/");
+      toast.error(signInData.error);
     }
   };
+
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    const signInData = await signIn("google", {
+      callbackUrl: "/",
+    });
+    if (signInData?.error) {
+      console.error(signInData.error);
+      toast.error(signInData.error);
+    }
+  };
+
+  if (status === "loading") {
+    return <Spinner />;
+  }
 
   return (
     <PageLayout>
@@ -100,8 +105,22 @@ const LoginPage = () => {
             </div>
             <hr />
             <div className="flex items-center mt-5 justify-center">
-              {!providers && <LoadingComponent text={"Betöltés..."} textColor={"text-gray-400"}/>}
-              {providers &&
+              {!providers && (
+                <LoadingComponent
+                  text={"Betöltés..."}
+                  textColor={"text-gray-400"}
+                />
+              )}
+              {providers && (
+                <button
+                  onClick={handleGoogleLogin}
+                  className="flex items-center py-2 px-4 border text-md border-blue-200 text-blue-400 hover:border-blue-300 hover:text-blue-500 shadow-sm font-medium rounded-md"
+                >
+                  <FaGoogle className="text-blue-500 mr-3" />
+                  <span>Belépés Google fiókkal</span>
+                </button>
+              )}
+              {/* {providers &&
                 Object.values(providers).map(
                   (provider, index) =>
                     provider.id === "google" && (
@@ -114,7 +133,7 @@ const LoginPage = () => {
                         <span>Belépés Google fiókkal</span>
                       </button>
                     )
-                )}
+                )} */}
             </div>
           </div>
         </div>

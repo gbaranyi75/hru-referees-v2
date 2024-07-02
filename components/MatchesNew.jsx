@@ -11,8 +11,6 @@ import {
   ages,
   venues,
   hours,
-  months,
-  weekDays,
 } from "@/constants/matchData";
 import OutlinedButton from "./common/OutlinedButton";
 import PrimaryButton from "./common/PrimaryButton";
@@ -35,7 +33,7 @@ const defaultFormFields = {
 };
 
 const MatchDetailsEdit = ({ resetEditMode }) => {
-  const {users, loading} = useUsers()
+  const { users } = useUsers();
 
   const [formFields, setFormFields] = useState(defaultFormFields);
   const [refList, setRefList] = useState([]);
@@ -183,8 +181,8 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
   }, [selectedType]);
 
   useEffect(() => {
-    setRefList(users)
-  }, [users])
+    setRefList(users);
+  }, [users]);
 
   return (
     <div className="mt-5  mb-6 lg:mx-16 md:mt-0 bg-white md:text-left">
@@ -209,7 +207,7 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
                     handleTypeChange(e);
                   }}
                 >
-                 <option selected disabled={true} value="">
+                  <option selected disabled={true} value="">
                     --Válassz típust--
                   </option>
                   {types.map((type, id) => (
