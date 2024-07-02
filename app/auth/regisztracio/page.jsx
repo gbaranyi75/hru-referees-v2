@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, useSession, getProviders } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import PageLayout from "@/components/common/PageLayout";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import { toast } from "react-toastify";
@@ -16,7 +16,6 @@ const defaultFormFields = {
 const RegisterPage = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-  const [err, setErr] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -54,15 +53,25 @@ const RegisterPage = () => {
           redirect: false,
         });
         toast.success("Sikeres regisztráció");
+
         if (signInData?.error) {
           console.error(signInData.error);
         } else {
           router.refresh();
           router.push("/");
         }
+      } else {
+        const data = await res.json();
+        console.log(data);
+        throw new Error(data.message);
       }
     } catch (err) {
-      setErr(true);
+      const error =
+        err.message && err.message.includes("E11000")
+          ? "Email is duplicate"
+          : err.message;
+      console.log(error);
+      toast.error("Ezzel az email címmel már létezik fiók" || "error");
     }
   };
 
@@ -122,7 +131,6 @@ const RegisterPage = () => {
                 <PrimaryButton type={"submit"} text={"Regisztráció"} />
               </div>
             </form>
-            {err && "Something went wrong!"}
           </div>
         </div>
       </figure>

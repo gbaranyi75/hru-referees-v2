@@ -10,7 +10,7 @@ import { FaFacebook } from "react-icons/fa";
 import LoadingComponent from "./common/LoadingComponent";
 
 const Navbar = () => {
-  const { data: session, loading, status, update } = useSession();
+  const { data: session, status } = useSession();
   const profileImage = session?.user?.image;
   const userRole = session?.user?.role;
 
