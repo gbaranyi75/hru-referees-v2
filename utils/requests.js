@@ -1,4 +1,8 @@
+"use server";
+import cloudinary from "@/config/cloudinary";
+
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || null;
+const uploadPreset = process.env.UPLOAD_PRESET || null;
 
 // Fetch all calendars
 async function fetchCalendarData() {
@@ -123,39 +127,11 @@ async function fetchUsers() {
   }
 }
 
-// Update existing user
-async function updateUserData(id, request) {
-  try {
-    // Handle the case where the domain is not available yet
-    if (!apiDomain) {
-      return [];
-    }
-    const res = await fetch(`${apiDomain}/users/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        displayName: request.name,
-      }),
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      throw new Error("Failed fetch data");
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
 export {
   fetchCalendarData,
   createNewCalendar,
   updateCalendarData,
   deleteCalendar,
   fetchUsers,
-  updateUserData,
+  updateUserProfileImage,
 };

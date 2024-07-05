@@ -60,6 +60,7 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
                             alt="logo"
                             width={10}
                             height={10}
+                            priority
                           />
                         ) : (
                           <Image
@@ -68,6 +69,7 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
                             alt="logo"
                             width={10}
                             height={10}
+                            priority
                           />
                         )}
                       </div>
