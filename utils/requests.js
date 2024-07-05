@@ -1,5 +1,4 @@
 "use server";
-import cloudinary from "@/config/cloudinary";
 
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || null;
 

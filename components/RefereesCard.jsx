@@ -1,12 +1,26 @@
+'use client'
 import Image from "next/image";
 import profileDefault from "@/assets/images/profile.png";
+import { useEffect, useState } from "react";
 
 const RefereesCard = ({ referee }) => {
+  const [validImgUrl, setValidImgUrl] = useState();
+
+  useEffect(() => {
+    const checkUrl = async () => {
+      if (referee.image !== "") {
+        const res = await fetch(referee.image);
+        if (res.status === 200) setValidImgUrl(referee.image);
+      }
+    };
+    checkUrl();
+  }, [referee]);
+
   return (
     <div className="rounded-xl shadow-md hover:shadow-xl relative">
       <div className="flex justify-center">
         <Image
-          src={referee.image || profileDefault}
+          src={validImgUrl|| profileDefault}
           alt="User"
           height={0}
           width={0}

@@ -12,13 +12,14 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  const profileImage = session?.user?.image;
+  //const profileImage = session?.user?.image;
   const { user, loading } = useCurrentUser();
   const userRole = session?.user?.role;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [validImgUrl, setValidImgUrl] = useState();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -31,6 +32,14 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    const checkUrl = async () => {
+      if (user?.image !== "") {
+        const imageURL = user?.image;
+        const res = await fetch(imageURL);
+        if (res.status === 200) setValidImgUrl(user.image);
+      }
+    };
+    checkUrl();
     setIsAdmin(userRole === "admin");
   }, [user]);
 
@@ -168,7 +177,7 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full border-2 border-white"
-                      src={profileImage || profileDefault}
+                      src={validImgUrl || profileDefault}
                       alt=""
                       width={50}
                       height={50}
