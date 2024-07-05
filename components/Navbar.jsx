@@ -263,7 +263,6 @@ const Navbar = () => {
                   rel="noreferrer"
                 >
                   <FaFacebook color="white" size={32} />
-                  {/* <span className="ml-2">Facebook</span> */}
                 </a>
               </div>
             </div>
@@ -293,15 +292,7 @@ const Navbar = () => {
             >
               Mérkőzések
             </Link>
-            {/* <Link
-              href="/"
-              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              className={`${
-                pathname === "/tablazat" ? "bg-red-300" : ""
-              } text-white block rounded-md px-3 py-2 text-sm font-medium`}
-            >
-              Később....
-            </Link> */}
+
             <div className="flex md:hidden text-white rounded-md px-3 py-3 text-sm font-medium">
               <a
                 className="flex items-center justify-center"
