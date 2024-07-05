@@ -133,5 +133,4 @@ export {
   updateCalendarData,
   deleteCalendar,
   fetchUsers,
-  updateUserProfileImage,
 };
