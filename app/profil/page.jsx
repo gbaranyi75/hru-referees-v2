@@ -5,9 +5,9 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/utils/authOptions";
 
 const ProfilePage = async () => {
-  const session = await getServerSession(authOptions);
+  //const session = await getServerSession(authOptions);
 
-  if (!session) redirect("/");
+  //if (!session) redirect("/");
   return (
     <PageLayout>
       <h1 className="text-2xl font-bold mb-2">Profilom</h1>
