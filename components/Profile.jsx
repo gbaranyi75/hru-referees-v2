@@ -89,7 +89,7 @@ const Profile = () => {
 
       if (resp.status === 200) {
         toast.success("Sikeres mentés");
-        window.location.reload(false);
+        //window.location.reload(false);
       } else {
         toast.error("Sikertelen mentés");
       }
