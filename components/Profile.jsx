@@ -22,7 +22,7 @@ const Profile = () => {
   const [validImgUrl, setValidImgUrl] = useState();
 
   useEffect(() => {
-    const checkUrl = async () => {
+    /* const checkUrl = async () => {
       if (user?.image !== "") {
         const imageURL = user?.image;
         const res = await fetch(imageURL);
@@ -30,7 +30,7 @@ const Profile = () => {
         if (res.status === 200) setValidImgUrl(user.image);
       }
     };
-    checkUrl();
+    checkUrl(); */
     setUserData(user);
     setDisplayName(user?.displayName);
   }, [user]);
