@@ -2,7 +2,6 @@
 import cloudinary from "@/config/cloudinary";
 
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || null;
-const uploadPreset = process.env.UPLOAD_PRESET || null;
 
 // Fetch all calendars
 async function fetchCalendarData() {

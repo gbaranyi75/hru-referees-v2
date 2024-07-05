@@ -18,7 +18,6 @@ const Navbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [validImgUrl, setValidImgUrl] = useState();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -31,18 +30,6 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    setIsAdmin(userRole === "admin");
-  }, [session]);
-
-  useEffect(() => {
-    const checkUrl = async () => {
-      if (user?.image !== "") {
-        const imageURL = user?.image;
-        const res = await fetch(imageURL);
-        if (res.status === 200) setValidImgUrl(user.image);
-      }
-    };
-    checkUrl();
     setIsAdmin(userRole === "admin");
   }, [user]);
 
