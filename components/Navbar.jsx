@@ -12,6 +12,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
+  const profileImage = session?.user?.image;
   const { user, loading } = useCurrentUser();
   const userRole = session?.user?.role;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -167,7 +168,7 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full border-2 border-white"
-                      src={validImgUrl || profileDefault}
+                      src={profileImage || profileDefault}
                       alt=""
                       width={50}
                       height={50}
