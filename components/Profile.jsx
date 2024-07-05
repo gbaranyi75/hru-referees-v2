@@ -55,7 +55,7 @@ const Profile = () => {
     }
   };
 
-  const uploadProfileImage = async (userId) => {
+  /* const uploadProfileImage = async (userId) => {
     const file = profileImage;
     if (!file) return;
 
@@ -98,7 +98,9 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; */
+
+  const uploadProfileImage = (id) => console.log(id)
 
   const handleChange = (e) => {
     setDisplayName(e.target.value);
