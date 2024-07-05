@@ -26,6 +26,7 @@ const Profile = () => {
       if (user?.image !== "") {
         const imageURL = user?.image;
         const res = await fetch(imageURL);
+        if (res.status !== 200) return;
         if (res.status === 200) setValidImgUrl(user.image);
       }
     };
