@@ -8,10 +8,11 @@ import { toast } from "react-toastify";
 import Spinner from "./common/Spinner";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import LoadingComponent from "@/components/common/LoadingComponent";
+import { cloudinaryNames } from "@/constants/cloudinary";
 
 const Profile = () => {
-  const CLOUD_NAME = "gabor-images";
-  const UPLOAD_PRESET = "hru-referees-images";
+  const CLOUD_NAME = cloudinaryNames.cloud_name;
+  const UPLOAD_PRESET = cloudinaryNames.upload_preset;
 
   const { user, loading } = useCurrentUser();
 
@@ -23,11 +24,11 @@ const Profile = () => {
 
   useEffect(() => {
     const checkUrl = async () => {
-      if (user?.image !== "") {
+      if (user?.image !== "" && user?.image !== undefined) {
         const imageURL = user?.image;
         const res = await fetch(imageURL);
         if (res.status !== 200) return;
-        if (res.status === 200) setValidImgUrl(user.image);
+        if (res.status === 200) setValidImgUrl(user?.image);
       }
     };
     checkUrl();
