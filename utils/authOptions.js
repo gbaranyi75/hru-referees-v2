@@ -87,6 +87,7 @@ export const authOptions = {
     async session({ session, token }) {
       // 1. Get user from database
       const user = await User.findOne({ email: session.user.email });
+      if (!user) console.log("Something went wrong");
       // 2. Assign the user id to the session
       session.user.id = user._id.toString();
       session.user.role = user.role;
