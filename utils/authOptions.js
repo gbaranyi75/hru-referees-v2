@@ -3,6 +3,7 @@ import User from "@/models/User";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import { redirect } from "next/dist/server/api-utils";
 
 export const authOptions = {
   providers: [
@@ -68,6 +69,8 @@ export const authOptions = {
         ? await User.findOne({ email: profile.email })
         : await User.findOne({ email: credentials.email });
       // 3. If not, then add user to database
+      console.log(profile.name);
+      if (!profile.name) return "/auth/belepes";
       if (!userExists) {
         // Truncate user name if too long
         const username = profile.name.slice(0, 25);

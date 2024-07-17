@@ -62,13 +62,10 @@ const LoginForm = () => {
       toast.error(signInData.error);
     }
   };
-  console.log(status)
-  console.log(session)
 
   if (status === "loading") {
     return <Spinner />;
   }
-  //if (session?.user) router.push("/");
 
   return (
     <figure className="flex">
