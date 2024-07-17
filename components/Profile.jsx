@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import profileDefault from "@/assets/images/profile.png";
 import OutlinedButton from "./common/OutlinedButton";
@@ -15,6 +17,8 @@ const Profile = () => {
   const UPLOAD_PRESET = cloudinaryNames.upload_preset;
 
   const { user, loading } = useCurrentUser();
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const [userData, setUserData] = useState({});
   const [displayName, setDisplayName] = useState();
@@ -35,6 +39,10 @@ const Profile = () => {
     setUserData(user);
     setDisplayName(user?.displayName);
   }, [user]);
+
+  useEffect(() => {
+    if (!session) router.push("/unauthenticated");
+  }, []);
 
   const updateDisplayName = async (userId) => {
     try {

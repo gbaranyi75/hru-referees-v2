@@ -17,7 +17,7 @@ const RefereesCard = ({ referee }) => {
   }, [referee]);
 
   return (
-    <div className="rounded-xl shadow-md hover:shadow-xl relative">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-xl relative pt-4">
       <div className="flex justify-center">
         <Image
           src={validImgUrl|| profileDefault}
