@@ -56,6 +56,7 @@ const LoginForm = () => {
     const signInData = await signIn("google", {
       callbackUrl: "/",
     });
+    console.log(signInData)
     if (signInData?.error) {
       console.error(signInData.error);
       toast.error(signInData.error);
@@ -66,7 +67,7 @@ const LoginForm = () => {
     return <Spinner />;
   }
 
-  if (session) router.push("/");
+  if (session?.user) router.push("/");
 
   return (
     <figure className="flex">

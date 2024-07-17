@@ -88,6 +88,8 @@ export const authOptions = {
       // 1. Get user from database
       const user = await User.findOne({ email: session.user.email });
       if (!user) console.log("Something went wrong");
+      if (user) console.log("Everything went well");
+
       // 2. Assign the user id to the session
       session.user.id = user._id.toString();
       session.user.role = user.role;
