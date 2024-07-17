@@ -70,7 +70,7 @@ export const authOptions = {
         : await User.findOne({ email: credentials.email });
       // 3. If not, then add user to database
       console.log(profile.name);
-      if (!profile.name) return "/auth/belepes";
+      if (!profile.name && !credentials) return "/auth/belepes";
       if (!userExists) {
         // Truncate user name if too long
         const username = profile.name.slice(0, 25);
