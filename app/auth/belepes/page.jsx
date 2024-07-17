@@ -6,8 +6,8 @@ import { authOptions } from "@/utils/authOptions";
 
 const LoginPage = async () => {
   const session = await getServerSession(authOptions);
-
-  if (session) redirect("/");
+console.log(session)
+  if (session?.user) redirect("/");
   return (
     <PageLayout>
       <h1 className="text-2xl font-bold mb-2 md:mb-10">Belépés</h1>

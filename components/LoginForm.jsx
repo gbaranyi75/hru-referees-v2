@@ -43,7 +43,7 @@ const LoginForm = () => {
     const signInData = await signIn("credentials", {
       email: email,
       password: password,
-      callbackUrl: "/",
+      //callbackUrl: "/",
     });
     if (signInData?.error) {
       console.error(signInData.error);
@@ -54,7 +54,7 @@ const LoginForm = () => {
   const handleGoogleLogin = async (e) => {
     e.preventDefault();
     const signInData = await signIn("google", {
-      callbackUrl: "/",
+      //callbackUrl: "/",
     });
     console.log(signInData)
     if (signInData?.error) {
@@ -62,12 +62,13 @@ const LoginForm = () => {
       toast.error(signInData.error);
     }
   };
+  console.log(status)
+  console.log(session)
 
   if (status === "loading") {
     return <Spinner />;
   }
-
-  if (session?.user) router.push("/");
+  //if (session?.user) router.push("/");
 
   return (
     <figure className="flex">
