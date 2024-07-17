@@ -43,7 +43,7 @@ const LoginForm = () => {
     const signInData = await signIn("credentials", {
       email: email,
       password: password,
-      //callbackUrl: "/",
+      callbackUrl: "/",
     });
     if (signInData?.error) {
       console.error(signInData.error);
@@ -54,7 +54,7 @@ const LoginForm = () => {
   const handleGoogleLogin = async (e) => {
     e.preventDefault();
     const signInData = await signIn("google", {
-      //callbackUrl: "/",
+      callbackUrl: "/",
     });
     console.log(signInData)
     if (signInData?.error) {
