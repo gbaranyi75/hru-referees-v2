@@ -27,6 +27,7 @@ const RefereesCard = ({ referee }) => {
           sizes="100vw"
           className="h-24 w-24 md:w-32 md:h-32 rounded-full mx-auto md:mx-0"
           priority
+          style={{objectFit:"scale-down"}}
         />
       </div>
       <div className="px-6 pt-2 md:pt-8">
