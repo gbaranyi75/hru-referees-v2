@@ -8,16 +8,12 @@ const CalendarPage = () => {
       <div className="w-full">
         <CardLayout>
           <Link href="/dashboard/calendar/new" className="my-6">
-            <OutlinedButton
-              text={"Új táblázat létrehozása"}
-            />
+            <OutlinedButton text={"Új táblázat létrehozása"} />
           </Link>
         </CardLayout>
         <CardLayout>
           <Link href="/dashboard/calendar/edit" className="my-6">
-            <OutlinedButton
-              text={"Táblázatok szerkesztése"}
-            />
+            <OutlinedButton text={"Táblázatok szerkesztése"} />
           </Link>
         </CardLayout>
         <div></div>

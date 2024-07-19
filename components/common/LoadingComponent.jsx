@@ -1,8 +1,9 @@
 const LoadingComponent = ({ text, textColor }) => {
-
   return (
     <>
-      <div className={`inline-flex items-center justify-center py-2 px-4 ${textColor} text-sm`}>
+      <div
+        className={`inline-flex items-center justify-center py-2 px-4 ${textColor} text-sm`}
+      >
         <svg
           aria-hidden="true"
           role="status"

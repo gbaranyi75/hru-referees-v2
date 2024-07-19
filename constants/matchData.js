@@ -76,7 +76,7 @@ const hours = Array.from(
     moment({
       hour: Math.floor(hour / 2),
       minutes: hour % 2 === 0 ? 0 : 30,
-    }).format("HH:mm")
+    }).format("HH:mm"),
 );
 
 const weekDays = ["Va", "Hé", "Ke", "Sze", "Csü", "Pé", "Szo"];

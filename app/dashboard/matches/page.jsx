@@ -8,16 +8,12 @@ const MatchesPage = () => {
       <div className="w-full">
         <CardLayout>
           <Link href="/dashboard/matches/new" className="my-6">
-            <OutlinedButton
-              text={"Új mérkőzés létrehozása"}
-            />
+            <OutlinedButton text={"Új mérkőzés létrehozása"} />
           </Link>
         </CardLayout>
         <CardLayout>
           <Link href="/dashboard/matches/edit" className="my-6">
-            <OutlinedButton
-              text={"Mérkőzések szerkesztése"}
-            />
+            <OutlinedButton text={"Mérkőzések szerkesztése"} />
           </Link>
         </CardLayout>
         <div></div>

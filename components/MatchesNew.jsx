@@ -163,7 +163,7 @@ const MatchDetailsEdit = ({ resetEditMode }) => {
       refList.map((n) => ({
         label: n.displayName,
         value: n.displayName,
-      }))
+      })),
     );
   };
 

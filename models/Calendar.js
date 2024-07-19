@@ -30,7 +30,7 @@ const CalendarSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Calendar = models.Calendar || model("Calendar", CalendarSchema);

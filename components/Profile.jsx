@@ -81,7 +81,7 @@ const Profile = () => {
           method: "POST",
           mode: "cors",
           body: formdata,
-        }
+        },
       );
 
       const data = await res.json();

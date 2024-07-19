@@ -56,7 +56,6 @@ const LoginForm = () => {
     const signInData = await signIn("google", {
       callbackUrl: "/",
     });
-    console.log(signInData)
     if (signInData?.error) {
       console.error(signInData.error);
       toast.error(signInData.error);

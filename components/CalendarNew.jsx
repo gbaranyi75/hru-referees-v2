@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { createNewCalendar } from "@/utils/requests";
 
 const CalendarNew = () => {
-  const {data: session} = useSession()
+  const { data: session } = useSession();
   const [dates, setDates] = useState([]);
   const [eventName, setEventName] = useState("");
   const [edited, setEdited] = useState(false);
@@ -38,7 +38,7 @@ const CalendarNew = () => {
     if (dates.length !== 0 && eventName !== "") {
       try {
         if (!session) {
-          return
+          return;
         }
         await createNewCalendar(newCalendar).then(exitEditMode());
         setDates([]);
@@ -140,7 +140,8 @@ const CalendarNew = () => {
                     <div className="flex my-1" key={idx}>
                       <span
                         id="badge-dismiss-dark"
-                        className="inline-flex items-center px-3 py-1 me-2 text-sm text-gray-600 bg-gray-300 rounded-full"                      >
+                        className="inline-flex items-center px-3 py-1 me-2 text-sm text-gray-600 bg-gray-300 rounded-full"
+                      >
                         {day}
                         <button
                           type="button"
@@ -149,7 +150,7 @@ const CalendarNew = () => {
                           aria-label="Remove"
                           onClick={() => {
                             const modifiedArray = dates.filter(
-                              (day) => dates.indexOf(day) !== idx
+                              (day) => dates.indexOf(day) !== idx,
                             );
                             setDates(modifiedArray);
                             setNewCalendar((prevState) => ({

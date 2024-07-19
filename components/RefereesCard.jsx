@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import profileDefault from "@/assets/images/profile.png";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ const RefereesCard = ({ referee }) => {
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl relative pt-4">
       <div className="flex justify-center">
         <Image
-          src={validImgUrl|| profileDefault}
+          src={validImgUrl || profileDefault}
           alt="User"
           height={0}
           width={0}
@@ -32,15 +32,15 @@ const RefereesCard = ({ referee }) => {
       <div className="px-6 pt-2 md:pt-8">
         <div className="text-center lg:text-left mb-2 md:mb-6">
           <div className="text-gray-600 text-sm">Név:</div>
-          <h3 className="text-sm md:text-md md:text-xl font-bold">
+          <h3 className="text-sm md:text-base font-bold">
             {referee.displayName}
           </h3>
         </div>
       </div>
-      <div className="md:p-6 pt-0">
+      <div className="py-4 md:p-6 md:pt-0">
         <div className="text-center lg:text-left mb-6">
           <div className="text-gray-600 text-sm">Email:</div>
-          <h3 className="text-sm">{referee.email}</h3>
+          <h3 className="text-sm font-bold">{referee.email}</h3>
         </div>
       </div>
     </div>
