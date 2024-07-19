@@ -86,7 +86,9 @@ const Navbar = () => {
                 alt="JV Bizottság"
                 width={40}
                 height={40}
+                sizes="100vw"
                 priority
+                style={{objectFit:"scale-down"}}
               />
 
               <span className="hidden md:block font-bold">
@@ -182,7 +184,9 @@ const Navbar = () => {
                       alt=""
                       width={50}
                       height={50}
+                      sizes="100vw"
                       priority
+                      style={{objectFit:"scale-down"}}
                     />
                   </button>
                 </div>

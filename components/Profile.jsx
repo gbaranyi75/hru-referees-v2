@@ -40,10 +40,6 @@ const Profile = () => {
     setDisplayName(user?.displayName);
   }, [user]);
 
-  useEffect(() => {
-    if (!session) router.push("/unauthenticated");
-  }, []);
-
   const updateDisplayName = async (userId) => {
     try {
       const res = await fetch(`/api/users/${userId}`, {
@@ -137,8 +133,10 @@ const Profile = () => {
               src={validImgUrl || profileDefault}
               width={150}
               height={150}
+              sizes="100vw"
               alt="User"
               priority={true}
+              style={{objectFit:"scale-down"}}
             />
           </div>
           <h2 className="text-base mb-4">
