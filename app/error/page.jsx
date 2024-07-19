@@ -10,8 +10,10 @@ const ErrorPage = () => {
             <FaExclamationTriangle className="fas fa-exclamation-triangle fa-5x text-8xl text-yellow-400"></FaExclamationTriangle>
           </div>
           <div className="text-center">
-          <h1 className='text-3xl font-bold mt-4 mb-2'>Valami hiba történt</h1>
-            <p className='text-gray-500 text-xl mb-10'>
+            <h1 className="text-3xl font-bold mt-4 mb-2">
+              Valami hiba történt
+            </h1>
+            <p className="text-gray-500 text-xl mb-10">
               Próbáld meg kicsit később...
             </p>
             <Link

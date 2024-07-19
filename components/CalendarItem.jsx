@@ -44,7 +44,7 @@ const CalendarItem = ({ calendar, isOpen, toggle }) => {
     if (dates.length !== 0 && eventName !== "") {
       try {
         await updateCalendarData(calendarId, updateCalendar).then(
-          exitEditMode()
+          exitEditMode(),
         );
         setDates([]);
         setEventName("");
@@ -167,7 +167,7 @@ const CalendarItem = ({ calendar, isOpen, toggle }) => {
                               aria-label="Remove"
                               onClick={() => {
                                 const modifiedArray = dates.filter(
-                                  (day) => dates.indexOf(day) !== idx
+                                  (day) => dates.indexOf(day) !== idx,
                                 );
                                 setDates(modifiedArray);
                                 setUpdateCalendar((prevState) => ({

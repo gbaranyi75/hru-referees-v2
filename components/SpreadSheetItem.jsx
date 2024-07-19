@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { MdOutlineExpandMore, MdOutlineExpandLess } from "react-icons/md";
@@ -60,6 +60,7 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
                             alt="logo"
                             width={10}
                             height={10}
+                            priority
                           />
                         ) : (
                           <Image
@@ -68,6 +69,7 @@ const SpreadSheetItem = ({ calendar, isOpen, toggle }) => {
                             alt="logo"
                             width={10}
                             height={10}
+                            priority
                           />
                         )}
                       </div>

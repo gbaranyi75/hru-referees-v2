@@ -8,7 +8,10 @@ const useUsers = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await fetch("/api/users");
+        const res = await fetch("/api/users", {
+          cache: "no-cache",
+          next: { revalidate: 0 },
+        });
 
         if (!res.ok) {
           throw new Error("Failed to fetch data");
@@ -25,6 +28,6 @@ const useUsers = () => {
 
     fetchUserData();
   }, []);
-  return {users, loading}
+  return { users, loading };
 };
 export default useUsers;

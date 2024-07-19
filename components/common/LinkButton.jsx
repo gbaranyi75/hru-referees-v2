@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
+import Link from "next/link";
 
 const LinkButton = ({ text, link }) => {
   return (
@@ -12,7 +12,7 @@ const LinkButton = ({ text, link }) => {
         <Link href={link}>{text}</Link>
       </button>
     </>
-  )
-}
+  );
+};
 
-export default LinkButton
+export default LinkButton;

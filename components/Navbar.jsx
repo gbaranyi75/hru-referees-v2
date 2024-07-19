@@ -8,16 +8,18 @@ import profileDefault from "@/assets/images/profile.png";
 import { signOut, useSession, getProviders } from "next-auth/react";
 import { FaFacebook } from "react-icons/fa";
 import LoadingComponent from "./common/LoadingComponent";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  const profileImage = session?.user?.image;
+  //const profileImage = session?.user?.image;
+  const { user, loading } = useCurrentUser();
   const userRole = session?.user?.role;
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [providers, setProviders] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [validImgUrl, setValidImgUrl] = useState();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -30,8 +32,17 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    const checkUrl = async () => {
+      if (user?.image !== "" && user?.image !== undefined) {
+        const imageURL = user?.image;
+        const res = await fetch(imageURL);
+        if (res.status !== 200) return;
+        if (res.status === 200) setValidImgUrl(user.image);
+      }
+    };
+    checkUrl();
     setIsAdmin(userRole === "admin");
-  }, [session]);
+  }, [user]);
 
   return (
     <nav className="bg-red-500 border-b border-red-200">
@@ -75,6 +86,7 @@ const Navbar = () => {
                 alt="JV Bizottság"
                 width={40}
                 height={40}
+                priority
               />
 
               <span className="hidden md:block font-bold">
@@ -166,10 +178,11 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full border-2 border-white"
-                      src={profileImage || profileDefault}
+                      src={validImgUrl || profileDefault}
                       alt=""
                       width={50}
                       height={50}
+                      priority
                     />
                   </button>
                 </div>
@@ -248,7 +261,6 @@ const Navbar = () => {
                   rel="noreferrer"
                 >
                   <FaFacebook color="white" size={32} />
-                  {/* <span className="ml-2">Facebook</span> */}
                 </a>
               </div>
             </div>
@@ -278,15 +290,7 @@ const Navbar = () => {
             >
               Mérkőzések
             </Link>
-            {/* <Link
-              href="/"
-              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              className={`${
-                pathname === "/tablazat" ? "bg-red-300" : ""
-              } text-white block rounded-md px-3 py-2 text-sm font-medium`}
-            >
-              Később....
-            </Link> */}
+
             <div className="flex md:hidden text-white rounded-md px-3 py-3 text-sm font-medium">
               <a
                 className="flex items-center justify-center"

@@ -3,6 +3,7 @@ import User from "@/models/User";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import { redirect } from "next/dist/server/api-utils";
 
 export const authOptions = {
   providers: [
@@ -40,7 +41,7 @@ export const authOptions = {
           if (user) {
             const isPasswordCorrect = await bcrypt.compare(
               credentials.password,
-              user.password
+              user.password,
             );
 
             if (isPasswordCorrect) {
@@ -87,6 +88,9 @@ export const authOptions = {
     async session({ session, token }) {
       // 1. Get user from database
       const user = await User.findOne({ email: session.user.email });
+      if (!user) console.log("Something went wrong");
+      if (user) console.log("Everything went well");
+
       // 2. Assign the user id to the session
       session.user.id = user._id.toString();
       session.user.role = user.role;

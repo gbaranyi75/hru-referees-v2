@@ -17,7 +17,7 @@ const AddMatchDaysItem = ({
   const [myCurrentDates, setMyCurrentDates] = useState([]);
   const [selectedDates, setSelectedDates] = useState(
     myCurrentDates,
-    ...calendar.days
+    ...calendar.days,
   );
 
   const calendarId = calendar._id;

@@ -16,7 +16,6 @@ export const GET = async (request, { params }) => {
 
     const user = await User.findById(userId);
     if (user === null) {
-      console.log("nincs ilyen id");
       return new NextResponse("Nincs ilyen ID", { status: 500 });
     }
     return new Response(JSON.stringify(user), {

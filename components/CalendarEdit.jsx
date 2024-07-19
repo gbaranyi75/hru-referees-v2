@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import CalendarItem from "./CalendarItem";
 import OutlinedButton from "@/components/common/OutlinedButton";
