@@ -6,7 +6,7 @@ import useCalendars from "@/hooks/useCalendars";
 
 const SpreadSheet = () => {
   const { calendars, loading } = useCalendars();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(0);
 
   const toggleOpen = (id) => () =>
     setIsOpen((isOpen) => (isOpen === id ? null : id));
