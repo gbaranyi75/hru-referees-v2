@@ -126,17 +126,16 @@ const Profile = () => {
   return (
     <div className="bg-white px-10 py-12 mt-6 md:mt-10 shadow-md rounded-md border">
       <div className="flex flex-col md:flex-row">
-        <div className="w-2/3 md:w-1/3 mx-auto justify-center text-center">
-          <div className="flex mb-4 justify-center">
+        <div className="w-2/3 md:w-2/3 mx-auto justify-center text-center">
+          <div className="flex py-12 mx-auto mb-4 justify-center w-2/3 md:w-1/2" style={{position: "unset !important"}}>
             <Image
-              className="h-20 w-20 md:w-32 md:h-32 xl:h-48 xl:w-48 rounded-full mx-auto"
+              className="rounded-full mx-auto relative object-contain w-[100%] aspect-square"
               src={validImgUrl || profileDefault}
-              width={150}
-              height={150}
+              width={0}
+              height={0}
               sizes="100vw"
               alt="User"
               priority={true}
-              style={{objectFit:"scale-down"}}
             />
           </div>
           <h2 className="text-base mb-4">
@@ -146,7 +145,7 @@ const Profile = () => {
             <span className="font-bold block">Email: </span> {userData?.email}
           </h2>
         </div>
-        <div className="w-full mt-5 md:mx-12 xl:mx-32 md:mt-0 bg-white md:text-left">
+        <div className="w-full mt-5 md:mx-12  md:mt-0 bg-white md:text-left">
           <form>
             <div className="shadow overflow-hidden sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
