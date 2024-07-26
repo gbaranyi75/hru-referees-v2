@@ -15,7 +15,7 @@ const useCurrentUser = () => {
         if (!session) return;
         if (status === "unauthenticated") router.push("/unauthenticated");
         const id = session?.user?.id;
-        const res = await fetch(`api/users/${id}`, {
+        const res = await fetch(`/api/users/${id}`, {
           cache: "no-cache",
           next: { revalidate: 0 },
         });
