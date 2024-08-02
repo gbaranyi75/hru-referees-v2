@@ -12,7 +12,6 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  //const profileImage = session?.user?.image;
   const { user, loading } = useCurrentUser();
   const userRole = session?.user?.role;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -88,7 +87,7 @@ const Navbar = () => {
                 height={40}
                 sizes="100vw"
                 priority
-                style={{objectFit:"scale-down"}}
+                style={{ objectFit: "scale-down" }}
               />
 
               <span className="hidden md:block font-bold">
@@ -186,7 +185,7 @@ const Navbar = () => {
                       height={50}
                       sizes="100vw"
                       priority
-                      style={{objectFit:"scale-down"}}
+                      style={{ objectFit: "scale-down" }}
                     />
                   </button>
                 </div>

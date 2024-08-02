@@ -11,7 +11,7 @@ const AddMatchDays = () => {
 
   const [calendars, setCalendars] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(0);
   const [displayName, setDisplayName] = useState("");
 
   const toggleOpen = (id) => () =>

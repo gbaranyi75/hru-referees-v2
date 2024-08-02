@@ -1,7 +1,14 @@
+"use client";
+import { useEffect } from "react";
 import Link from "next/link";
 import { FaExclamationTriangle } from "react-icons/fa";
 
-const ErrorPage = () => {
+const ErrorPage = ({ error, reset }) => {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
+
   return (
     <section className="bg-blue-50 min-h-screen flex-grow">
       <div className="container m-auto max-w-2xl py-24">
