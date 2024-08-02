@@ -122,7 +122,7 @@ const Profile = () => {
   };
 
   if (loading) return <Spinner />;
-
+  
   return (
     <div className="bg-white px-10 py-12 mt-6 md:mt-10 shadow-md rounded-md border">
       <div className="flex flex-col md:flex-row">

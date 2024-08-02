@@ -3,7 +3,6 @@ import User from "@/models/User";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { redirect } from "next/dist/server/api-utils";
 
 export const authOptions = {
   providers: [
