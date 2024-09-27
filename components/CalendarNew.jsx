@@ -7,7 +7,8 @@ import PrimaryButton from "@/components/common/PrimaryButton";
 import OutlinedButton from "@/components/common/OutlinedButton";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { createNewCalendar } from "@/utils/requests";
+import createNewCalendar from "@/actions/createCalendar";
+//import { createNewCalendar } from "@/utils/requests";
 
 const CalendarNew = () => {
   const { data: session } = useSession();
@@ -150,7 +151,7 @@ const CalendarNew = () => {
                           aria-label="Remove"
                           onClick={() => {
                             const modifiedArray = dates.filter(
-                              (day) => dates.indexOf(day) !== idx,
+                              (day) => dates.indexOf(day) !== idx
                             );
                             setDates(modifiedArray);
                             setNewCalendar((prevState) => ({
