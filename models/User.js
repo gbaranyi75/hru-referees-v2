@@ -25,6 +25,10 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Username is required"],
     },
+    verifyToken: {
+      type: String,
+      required: false,
+    }
   },
   {
     timestamps: true,
