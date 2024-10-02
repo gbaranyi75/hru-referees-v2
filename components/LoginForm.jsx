@@ -105,7 +105,12 @@ const LoginForm = () => {
               text={"Nincs még fiókod? Készítsd el!"}
             />
           </div>
-          <hr />
+          <div className="flex items-center mt-3 mb-5 text-sm justify-center">
+            <LinkButton
+              link={"/elfelejtett-jelszo"}
+              text={"Elfelejtetted a jelszavad? Kattints ide!"}
+            />
+          </div>
           <div className="flex items-center mt-5 justify-center">
             {!providers && (
               <LoadingComponent
