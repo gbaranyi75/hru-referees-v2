@@ -5,22 +5,22 @@ import { toast } from "react-toastify";
 import { updatePassword } from "@/actions/updatePassword";
 
 const NewPassword = ({ params }) => {
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   //console.log(params.token);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     //console.log(password);
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       toast.error("A jelszavaknak meg kell egyezniük");
       return;
     }
-    if (password.length < 8) {
+    if (newPassword.length < 8) {
       toast.error("A jelszó legalább 8 karakter legyen");
       return;
     }
-    await updatePassword({ password, token: params.token });
+    await updatePassword({ newPassword, token: params.token });
   };
 
   return (
@@ -35,8 +35,8 @@ const NewPassword = ({ params }) => {
                 type="password"
                 autoComplete="true"
                 required
-                value={password}
-                onChange={(e) => setPassword(prev => e.target.value)}
+                value={newPassword}
+                onChange={(e) => setNewPassword(prev => e.target.value)}
                 className="w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               />
             </label>
