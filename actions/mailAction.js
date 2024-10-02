@@ -37,6 +37,7 @@ export async function mailAction({ email, domain }) {
       }
       console.log("Message sent: %s", info.messageId);
     });
+    
     const res = await User.findOneAndUpdate(
       { email: email },
       { verifyToken: token }
