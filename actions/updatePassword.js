@@ -14,6 +14,7 @@ export async function updatePassword({ newPassword, token }) {
     { verifyToken: token },
     { password: passwordHashed }
   );
-  
+
   if (res) redirect("/auth/belepes");
+  return res;
 }

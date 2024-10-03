@@ -11,16 +11,15 @@ export async function mailAction({ email, domain }) {
   if (result) {
     const token = nanoid(32);
     const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
-        user: "7d19de003@smtp-brevo.com",
-        pass: "PGZnSdgQyfsBYch5",
+        user: process.env.MAILER_USER, //"hrureferees.hu@gmail.com",
+        pass: process.env.MAILER_PASS, //"fmlutfdtwaclqcly",
       },
     });
     console.log("Token ", token);
-    //console.log(transporter)
     const htmlBody = `Kattints ide a jelszó  helyreállításához! <a href="${domain}/jelszo-helyreallitas/${token}"> Jelszó helyreállítása</a>`;
     const message = {
       from: '"HRU Referees" <bgabor91@gmail.com>', // sender address
@@ -37,12 +36,11 @@ export async function mailAction({ email, domain }) {
       }
       console.log("Message sent: %s", info.messageId);
     });
-    
+
     const res = await User.findOneAndUpdate(
       { email: email },
       { verifyToken: token }
     );
-    //console.log(res);
     return res.verifyToken;
   } else {
     console.log("user does not exist", result);

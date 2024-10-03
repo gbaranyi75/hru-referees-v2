@@ -3,6 +3,7 @@ import { useState } from "react";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import { mailAction } from "@/actions/mailAction";
 import Spinner from "./common/Spinner";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -10,14 +11,13 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const domain = process.env.NEXT_PUBLIC_DOMAIN
-  //console.log(domain)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const res = await mailAction({ email, domain });
-    //console.log(res);
     if (res) {
+      toast.success("Sikeres emlékeztető küldés");
       setEmailSent(true);
       setLoading(false);
     } else {
