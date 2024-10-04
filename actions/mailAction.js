@@ -5,7 +5,7 @@ import User from "@/models/User";
 import { nanoid } from "nanoid";
 import nodemailer from "nodemailer";
 import { Resend } from "resend";
-import ResetPasswordEmailMsg from "@/components/ResetPasswordEmailMsg";
+//import ResetPasswordEmailMsg from "@/components/ResetPasswordEmailMsg";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
