@@ -7,11 +7,9 @@ import { updatePassword } from "@/actions/updatePassword";
 const NewPassword = ({ params }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  //console.log(params.token);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(password);
     if (newPassword !== confirmPassword) {
       toast.error("A jelszavaknak meg kell egyezniük");
       return;
@@ -20,7 +18,8 @@ const NewPassword = ({ params }) => {
       toast.error("A jelszó legalább 8 karakter legyen");
       return;
     }
-    await updatePassword({ newPassword, token: params.token });
+    const res = await updatePassword({ newPassword, token: params.token });
+    if (res) toast.success("Sikeres jelszómódosítás");
   };
 
   return (
