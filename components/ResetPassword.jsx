@@ -16,6 +16,7 @@ const ResetPassword = () => {
     e.preventDefault();
     setLoading(true);
     const res = await mailAction({ email, domain });
+    console.log(res[0])
     if (res) {
       toast.success("Sikeres emlékeztető küldés");
       setEmailSent(true);
