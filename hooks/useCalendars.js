@@ -16,9 +16,8 @@ const useCalendars = () => {
         const data = await res.json();
         const sortedData = data.sort((a, b) => {
           return (
-            new Date(b.days[0]).getMonth() - new Date(a.days[0]).getMonth()
-          );
-        });
+            new Date(b.days[0]).getTime() - new Date(a.days[0]).getTime());
+        }); 
         setCalendars(sortedData);
       } catch (error) {
         console.error(error);
