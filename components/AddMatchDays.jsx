@@ -4,20 +4,22 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import AddMatchDaysItem from "./AddMatchDaysItem";
 import Spinner from "./common/Spinner";
+import useCalendars from "@/hooks/useCalendars";
 
 const AddMatchDays = () => {
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
-  const [calendars, setCalendars] = useState([]);
-  const [loading, setLoading] = useState(true);
+  //const [calendars, setCalendars] = useState([]);
+  const { calendars, loading } = useCalendars();
+  //const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(0);
   const [displayName, setDisplayName] = useState("");
 
   const toggleOpen = (id) => () =>
     setIsOpen((isOpen) => (isOpen === id ? null : id));
 
-  useEffect(() => {
+/*   useEffect(() => {
     const fetchMatchDays = async () => {
       try {
         const res = await fetch("/api/dashboard/calendar");
@@ -40,7 +42,7 @@ const AddMatchDays = () => {
     };
 
     fetchMatchDays();
-  }, []);
+  }, []); */
 
   useEffect(() => {
     const fetchUserData = async (userId) => {
