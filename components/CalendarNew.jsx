@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
+import { toast } from "react-toastify";
 
 import DisabledButton from "@/components/common/DisabledButton";
 import PrimaryButton from "@/components/common/PrimaryButton";
@@ -31,6 +32,7 @@ const CalendarNew = () => {
   };
 
   const exitEditMode = () => {
+    toast.success("Sikeres mentés");
     router.push("/dashboard/calendar");
   };
 
