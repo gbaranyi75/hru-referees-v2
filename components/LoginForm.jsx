@@ -44,11 +44,16 @@ const LoginForm = () => {
       email: email,
       password: password,
       callbackUrl: "/",
+      redirect: false,
     });
     if (signInData?.error) {
       console.error(signInData.error);
       toast.error(signInData.error);
+      return;
     }
+    toast.success("Sikeres belépés!");
+    router.refresh();
+    router.push("/");
   };
 
   const handleGoogleLogin = async (e) => {
@@ -59,6 +64,7 @@ const LoginForm = () => {
     if (signInData?.error) {
       console.error(signInData.error);
       toast.error(signInData.error);
+      return;
     }
   };
 
