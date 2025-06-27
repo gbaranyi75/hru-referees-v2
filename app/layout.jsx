@@ -8,7 +8,7 @@ import "@/assets/styles/globals.css";
 export const metadata = {
   title: "HRU Referees",
   description: "MRGSZ Játékvezetői Bizottság",
-  keywords: "referee, hru, játékvezető",
+  keywords: "referee, hru, játékvezető, rugby, rögbi"
 };
 
 const MainLayout = ({ children }) => {

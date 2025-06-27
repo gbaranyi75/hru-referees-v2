@@ -30,6 +30,7 @@
     "resend": "^4.0.0"
   },
   "devDependencies": {
+    "@types/node": "^24.0.4",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",

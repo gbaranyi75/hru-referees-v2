@@ -46,10 +46,10 @@ export const authOptions = {
             if (isPasswordCorrect) {
               return user;
             } else {
-              throw new Error("Wrong Credentials!");
+              throw new Error("A belépési adatok hibásak!");
             }
           } else {
-            throw new Error("User not found!");
+            throw new Error("A felhasználó nem található! Próbáld újra!");
           }
         } catch (err) {
           console.error(err);
